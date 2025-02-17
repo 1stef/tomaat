@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Herstel uw wachtwoord{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="w3-container narrow">
+    {% for flashError in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+    <h1>Herstel uw wachtwoord</h1>
+
+    {% form_theme requestForm 'bootstrap_4_horizontal_layout.html.twig' %}
+    {{ form_start(requestForm) }}
+    {{ form_errors(requestForm) }}
+        {{ form_row(requestForm.email) }}
+        <div>
+            <i>
+                Geef uw email adres op en wij sturen een link om uw wachtwoord te herstellen
+            </i>
+        </div>
+
+        <button class="newbutton">Stuur email</button>
+    {{ form_end(requestForm) }}
+</div>
+{% endblock %}

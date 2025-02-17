@@ -1,0 +1,21 @@
+{% extends 'wijzigingen/wijzigingen_template.html.twig' %}
+
+{% block pagina_titel %}
+    {{parent()}}, stap 1
+{% endblock %}
+
+{% block aanhef %}
+{{ indiener }} wil de volgende wedstrijd afzeggen:
+{% endblock %}
+
+{% block afsluiting %}
+Bevestig dat u deze afzegging gezien heeft. Mogeljk krijgt u een vervangende wedstrijd aangeboden.
+{% endblock %}
+
+{% block buttons %}
+<a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3_ontvanger', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'bevestig'}) }}">Bevestig</a>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

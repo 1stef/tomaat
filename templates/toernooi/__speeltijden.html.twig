@@ -1,0 +1,56 @@
+<div id="modalSpeeltijden" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalCenterTitle">Speeltijden</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4>Toernooi naam: <b>{{ toernooi.getToernooiNaam() }}</b></h4>
+            </div>
+            <div class="modal-body">
+               {% form_theme speeltijdenForm 'bootstrap_4_horizontal_layout.html.twig' %}
+               {{ form_start(speeltijdenForm, {'attr': {'action': path('toernooigegevens'), 'method': 'POST', 'id': 'speeltijdenForm_id'}}) }}
+               {{ form_widget(speeltijdenForm.toernooi_id, {'attr':{'style':'display:none'}}) }}
+               {% for row in speeltijdenForm.speeltijden %}
+                    {{ form_widget(row.id, {'attr':{'style':'display:none'}}) }}
+                    {{ form_widget(row.toernooi_id, {'attr':{'style':'display:none'}}) }}
+                    <fieldset>
+                        {{ form_widget(row.dagnummer, {'attr':{'style':'display:none'}}) }}
+                        {% set eerste_dag = date(toernooi.getEersteDag()) %}
+                        {% set offset = row.dagnummer.vars.value-1 %}
+                        {% set datum = eerste_dag|date_modify("+" ~ offset ~ " day")|date("D d-m-Y")   %}
+                        <legend>dag nummer {{ row.dagnummer.vars.value }}, {{ datum }}:</legend>
+                        <div class="form-group w3-row">
+                            <label class="control-label col-sm-3" for="eerste">Wedstrijdduur (minuten):</label>
+                            <div class="col-sm-4">          
+                                {{ form_widget(row.wedstrijd_duur) }}
+                            </div>
+                            <div class="col-sm-4">          
+                                {{ form_errors(row.wedstrijd_duur) }}
+                            </div>
+                        </div>
+                        <div class="form-group w3-row">
+                            <label class="control-label col-sm-3" for="eerste">Starttijd:</label>
+                            <div class="col-sm-4">          
+                                {{ form_widget(row.starttijd) }}
+                            </div>
+                        </div>
+                        <div class="form-group w3-row">
+                            <label class="control-label col-sm-3" for="eerste">Eindtijd:</label>
+                            <div class="col-sm-4">          
+                                {{ form_widget(row.eindtijd) }}
+                            </div>
+                        </div>
+                    </fieldset>
+               {% endfor %}
+
+               {# {{ dump(speeltijdenForm) }} #}
+               {{ form_end(speeltijdenForm) }}
+            </div>
+            <div class="modal-footer">
+                <button type="submit" value="Opslaan" form="speeltijdenForm_id" class="newbutton">Opslaan</button>
+                <button type="button" class="newbutton" data-dismiss="modal">Sluit</button>
+            </div>
+        </div>
+    </div>
+</div>
+

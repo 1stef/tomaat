@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toon Inschrijvingen{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<h3>Inschrijvingen</h3>
+<div class="w3-dropdown-hover">
+    <button class="w3-button">Per Categorie
+    <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="w3-dropdown-content w3-bar-block">
+      {% for categorie in categorieen %}
+          <a href="{{ path('toon_inschrijvingen', {'categorie': categorie.getCat() } ) }}" class="w3-bar-item w3-button" style="text-align:center">
+              {{ categorie.getCat() }}</a>
+      {% endfor %}
+    </div>
+</div> 
+
+<div class="w2-container" id="presentation-area">
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% if inschrijvingen is defined %}
+<script>
+  var toon = true;
+  var inschrijvingen = {{ inschrijvingen|raw }};  // twig doet de json_decode al
+</script>
+{% else %}
+<script>
+  var toon = false;
+</script>
+{% endif %}
+<script src="{{ asset('js/toon_inschrijvingen.js')}}"></script>
+{% endblock %}

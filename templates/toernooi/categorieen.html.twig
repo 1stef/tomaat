@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wijzig toernooi categorieën{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<h2>Voeg toernooi categorieën toe of wijzig toernooi categorieën</h2>
+<h3>Toernooi naam: <b>{{ toernooi_naam }}</b></h3>
+<div class="w3-row">
+<p class="max-75 w3-col s8">
+
+</p>
+</div>
+<div class-"w3-row">
+<div id="categorie_list" class="w3-col s6 mycontainer">
+{% for cat in categorieen %}
+<div class="w3-row">
+<div class="w3-col s3 w3-border w3-border-blue w3-margin"><b>{{ cat['cat'] }}</b></div>
+<div class="w3-col s3 w3-border w3-border-blue w3-margin"><b>{{ cat['cat_type'] }}</b></div>
+<button class="w3-col w3-button w3-blue w3-round-xlarge w3-small w3-margin s3" title="Verwijder" data-cat = "{{ cat['cat'] }}" onclick = "deleteCat(this);"><b>Verwijder</b></button>
+</div>
+{% endfor %}
+</div>
+</div>
+<div class="w3-row">
+<div class="w3-col s6 mycontainer-no-border">
+<input type="text" class="w3-col w3-margin w3-border-blue s3" id="nieuwe_cat" placeholder="nieuwe categorie">
+<select class="w3-col w3-margin w3-border-blue s3" id="nieuw_type" style="height:30px">
+    <option>enkel</option>
+    <option>dubbel</option>
+</select>
+<button class="w3-col w3-button w3-blue w3-round-xlarge w3-small w3-margin s3" onclick = "addCat();">Voeg toe</button>
+<div id="error_message" class="feedback_message w3-row"></div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+var toernooi_id = {{ toernooi_id }};
+</script>
+<script src="{{ asset('js/categorieen.js')}}" ></script>
+{% endblock %}
+
+

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{% block title %}Toernooi Op Maat{% endblock %}</title>
+
+        {% block stylesheets %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        {# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> #}
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">        
+        <link href = "{{ asset('css/base.css') }}" rel="stylesheet"/>
+        {% endblock %}
+        <script src="https://kit.fontawesome.com/373d20771b.js" crossorigin="anonymous"></script>
+
+    </head>
+
+    <body>
+        {% block mobileheader %}
+        <span class="mobile-header">
+          <div style="margin-left:10px">menu</div><i class="fas fa-bars fa-2x fa-pull-left" style="margin-left:20px; margin-right:40px" onclick="toggleSidebar()"></i><h2 style="margin-top:-10px">Toernooi Op Maat</h2></span>
+        {% endblock %}
+
+        {% block huidig_toernooi %}
+        <div class="w3-row" style="min-height:60pt; padding-top:8pt; font-size:16pt; background-color:CornflowerBlue">
+          <div class="logo-large w3-col s3 m3 l3"><h3>Toernooi Op Maat</h3></div>
+          <div class="w3-container w3-col s8 m8 l8" style="margin-left:15px;">
+            {% if app.session.get('huidig_toernooi') %}
+              <span>Huidig toernooi: <span id="huidig_toernooi" style="font-weight: bold">{{ app.session.get('huidig_toernooi') }}</span> </span>
+            {% else %}
+              <span>Huidig toernooi: <span id="huidig_toernooi">geen</span> </span>
+            {% endif %}
+            {% if app.session.get('gekozen_rol') == 'speler'%}
+              {% if app.session.get('huidig_toernooi') and (app.session.get('toernooi_status') == 'inschrijven') %}
+                {% set toon_schrijf_in = "button-visible newbutton" %}
+              {%else %}
+                {% set toon_schrijf_in = "button-hidden newbutton" %}
+              {% endif %}
+              <button class='{{toon_schrijf_in}}' id="schrijf_in"
+                onclick="window.location.href = '/schrijfIn';">Schrijf in / wijzig</button>
+            {% else %}
+                <div>Toernooi status: <span style="font-weight: bold">{{ app.session.get('toernooi_status') }}</span> </div>
+            {% endif %}
+            {% for message in app.flashes('feedback') %}
+              <div class="feedback_message">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endblock %}
+
+        {% block sidebar %}
+        <div id="hide_sidebar" class="my-sidebar w3-bar-block w3-light-blue">
+          <a href="{{ path('uitleg') }}" class="w3-bar-item w3-button" id="uitleg">Uitleg</a> 
+          <a href="{{ path('toernooien') }}" class="w3-bar-item w3-button" id="toernooien">Toernooien</a> 
+          <a class="w3-bar-item w3-button" onclick="loginMetRol('speler')">Login</a> 
+          <a href="{{ path('app_register') }}" class="w3-bar-item w3-button" id="registreer">Registreer</a>
+          <br><hr>
+          {% if (is_granted('ROLE_USER')) %}
+          <div class="w3-bar-item w3-button">Ingelogd als:</div>
+          <div class="w3-bar-item w3-button"><b>{{ app.user.username }}</b></div>
+          <a href="{{ path('app_logout') }}" class="w3-bar-item w3-button" id="logout">Logout</a> 
+          <a href="{{ path('deelnemer_account', {'actie':'edit'} ) }}" class="w3-bar-item w3-button" id="account">Account</a>
+          {% else %}
+          <div class="w3-bar-item w3-button">Niet ingelogd</div>
+          {% endif %}
+          <br><br><hr>
+          <div class="w3-bar-item">Login als:</div>
+          <a class="w3-bar-item w3-button" onclick="loginMetRol('aanvrager')">Aanvrager toernooi</a> 
+          <a class="w3-bar-item w3-button" onclick="loginMetRol('admin_toernooi')">Admin toernooi</a> 
+        </div>
+        {% endblock %}
+       
+        {% block content %}
+        {# if (app.session.get('gekozen_rol') != 'speler') or (is_granted('ROLE_ADMIN')) #}
+        {% if (is_granted('ROLE_USER')) %}
+        <nav class="navbar navbar-expand-sm not-sidebar" style="background-color:powderblue">
+            <div class="container-fluid" style="background-color:powderblue">
+              <ul class="navbar-nav">
+              {% set huidig_toernooi_id = app.session.get('huidig_toernooi_id') %}
+              {% if (is_granted('ROLE_ADMIN')) %}
+              <li class="dropdown nav-item"><button class="dropdown-toggle dropdownbutton"  data-toggle="dropdown" href="./tournamanager">Admin functies<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li class="li-item"><a href="{{ path('toernooi_statussen', {'status' : 'aangevraagd'}) }}">Toernooi statussen</a></li>
+                  <li class="li-item"><a href="{{ path('generate_users') }}">Genereer Users</a></li>
+                  {% if app.session.get('huidig_toernooi') %}
+                  <li class="li-item"><a href="{{ path('genereer_verh') }}">Genereer Verhinderingen</a></li>
+                  {% endif %}
+                </ul>
+              </li>
+              {% endif %}
+              {% if app.session.get('gekozen_rol') == 'speler' %}
+                <li class="dropdown nav-item"><button class="dropdown-toggle dropdownbutton" data-toggle="dropdown" href="#">Toernooi info<span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li class="li-item"><a href={{ path('mijn_berichten') }}>Mijn berichten</a></li>
+                    {% if app.session.get('huidig_toernooi') %}
+                    <li class="li-item"><a href="{{ path('mijn_wedstrijden') }}">Mijn wedstrijden</a></li>
+                    <li class="li-item"><a href="{{ path('mijn_ranglijsten') }}">Mijn standen</a></li>
+                    <li class="li-item"><a href="{{ path('statistieken_inschrijvingen') }}">Overzicht inschrijvingen</a></li>
+                    <li class="li-item"><a href="{{ path('inschrijvingen') }}">Toon inschrijvingen</a></li>
+                    <li class="li-item"><a href="{{ path('ranglijsten') }}">Alle standen</a></li>
+                    <li class="li-item"><a href="{{ path('toon_wedstrijden') }}">Alle wedstrijden</a></li>
+                    {% endif %}
+                  </ul>
+                </li>
+                <li class="dropdown nav-item"><button class="dropdown-toggle dropdownbutton" data-toggle="dropdown" href="#">Wijzigen<span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    {% if (app.session.get('huidig_toernooi')) %}
+                      {% if (is_granted('INSCHRIJVEN', huidig_toernooi_id)) %}
+                      <li class="li-item"><a href="{{ path('schrijfIn') }}">Inschrijving
+                      </a></li>
+                      {% endif %}
+                      {% if (is_granted('INSCHRIJVEN_SPELEN', huidig_toernooi_id)) %}
+                      <li class="li-item"><a href="{{ path('wijzig_verhinderingen', {'wedstrijd_wijziging_id':0}) }}">Verhinderingen</a></li>
+                      {% endif %}
+                      {% if (is_granted('SPELEN', huidig_toernooi_id)) %}
+                      <li class="li-item"><a href="{{ path('wizard_wijzig_wedstrijd_1') }}">Geplande wedstrijd wijzigen</a></li>
+                      <li class="li-item"><a href="{{ path('terugtrekken') }}">Volledig terugtrekken</a></li>
+                      {% endif %}
+                    {% endif %}
+                  </ul>
+                </li>
+              {% endif %}
+              {% if app.session.get('gekozen_rol') == 'aanvrager' %}
+                <li class="dropdown"><button class="dropdown-toggle dropdownbutton" data-toggle="dropdown" href="#">Toernooi aanvragen<span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li class="li-item"><a href="{{ path('aanvraag_toernooi') }}">Vraag nieuw toernooi aan</a></li>
+                    <li class="li-item"><a href="{{ path('wijzig_aanvraag') }}">Wijzig aanvraag</a></li>
+                    <li class="li-item"><a href="{{ path('wijzig_admins') }}">Wijzig toernooi administrators</a></li>
+                  </ul>
+                </li>
+              {% endif %}
+              {% if app.session.get('gekozen_rol') == 'admin_toernooi' %}
+                {% if (is_granted('ROLE_ADMIN_TOERNOOI', huidig_toernooi_id)) %}
+                  <li class="dropdown nav-item"><button class="dropdown-toggle dropdownbutton" data-toggle="dropdown" href="#">Berichten<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="li-item"><a href="{{ path('toernooileiding_berichten') }}">Toernooileiding berichten</a></li>
+                    </ul>
+                  </li>
+                  {% if (is_granted('VOORBEREIDEN', huidig_toernooi_id)) %}
+                  <li class="dropdown nav-item"><button class="dropdown-toggle dropdownbutton" data-toggle="dropdown" href="#">Vóór het toernooi<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="li-item"><a href="{{ path('toernooigegevens') }}">Toernooi gegevens</a></li>
+                      {# <li class="li-item"><a href="{{ path('maak_tijdsloten') }}">Maak tijdsloten</a></li> #}
+                      {# <li class="li-item"><a href="{{ path('toon_tijdsloten') }}">Toon capaciteit</a></li> #}
+                      <li class="li-item"><a href="{{ path('start_inschrijving') }}">Start inschrijving</a></li>
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if (is_granted('INSCHRIJVEN', huidig_toernooi_id)) %}
+                  <li class="dropdown nav-item"><button class="dropdown-toggle dropdownbutton" data-toggle="dropdown" href="./tournamanager">Tijdens inschrijving<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="li-item"><a href="{{ path('statistieken_inschrijvingen') }}">Overzicht inschrijvingen</a></li>
+                      <li class="li-item"><a href="{{ path('inschrijvingen') }}">Toon inschrijvingen</a></li>
+                      <li class="li-item"><a href="{{ path('sluit_inschrijving') }}">Sluit inschrijving</a></li>
+                      <li class="li-item"><a href="#" onclick="zetStatusTerug()">Status terugzetten</a></li>
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if (is_granted('PLANNEN', huidig_toernooi_id)) %}
+                  <li class="dropdown"><button class="dropdown-toggle dropdownbutton" data-toggle="dropdown" href="./tournamanager">Plannen<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="li-item"><a href="{{ path('plan_wedstrijden') }}">Plan wedstrijden</a></li>
+                      <li class="li-item"><a href="{{ path('toon_wedstrijden') }}">Toon wedstrijden</a></li>
+                      {# <li class="li-item"><a href="#">Communiceer wedstrijden</a></li> #}
+                      <li class="li-item"><a href="{{ path('communiceer_wedstrijden') }}">Communiceer wedstrijden</a></li>
+                      <li class="li-item"><a href="{{ path('start_toernooi') }}">Start toernooi</a></li>
+                      <li class="li-item"><a href="#" onclick="zetStatusTerug()">Status terugzetten</a></li>
+                    </ul>
+                  </li>
+                  {% endif %}
+                  {% if (is_granted('SPELEN', huidig_toernooi_id)) %}
+                  <li class="dropdown nav-item"><button class="dropdown-toggle dropdownbutton"  data-toggle="dropdown" href="./tournamanager">Voorbereiden<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="li-item"><a href="#">Toon/print dagschemas</a></li>
+                      <li class="li-item"><a href="#">Toon/print categorieschemas</a></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown nav-item"><button class="dropdown-toggle dropdownbutton"  data-toggle="dropdown" href="./tournamanager">Spelen<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="li-item"><a href="{{ path('dashboard') }}">Dashboard huidige speeldag</a></li>
+                      <li class="li-item"><a href="{{ path('volgende_speeldag') }}">Volgende speeldag</a></li>
+                      <li class="li-item"><a href="{{ path('vorige_speeldag') }}">Vorige speeldag</a></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown"><button class="dropdown-toggle dropdownbutton" data-toggle="dropdown" href="./tournamanager">Herplannen<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="li-item"><a href="{{ path('zoek_wedstrijd') }}">Zoek wedstrijd</a></li>
+                      <li class="li-item"><a href="{{ path('maak_extra_wedstrijden') }}">Maak extra wedstrijden</a></li>
+                      <li class="li-item"><a href="{{ path('toon_wedstrijd_wijzigingen') }}">Toon wedstrijd-wijzigingen</a></li>
+                      <li class="li-item"><a href="{{ path('minder_gepland') }}">Toon minder gepland</a></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown"><button class="dropdown-toggle dropdownbutton" data-toggle="dropdown" href="./tournamanager">Afronden<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="li-item"><a href="#">Stuur resultaten naar bond</a></li>
+                      <li class="li-item"><a href="#" onclick="zetStatusTerug()">Status terugzetten</a></li>
+                      <li class="li-item"><a href="#">Sluit toernooi af</a></li>
+                    </ul>
+                  </li>
+                  {% endif %}
+                  <li class="dropdown"><button class="dropdown-toggle dropdownbutton" data-toggle="dropdown" href="./tournamanager">Overzichten<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      {#
+                      <li class="li-item"><a href="#">Toon aanvraag</a></li>
+                      <li class="li-item"><a href="#">Toon toernooigegevens</a></li>
+                      #}
+                      <li class="li-item"><a href="{{ path('toon_tijdsloten') }}">Toon capaciteit</a></li>
+                      <li class="li-item"><a href="{{ path('statistieken_inschrijvingen') }}">Overzicht inschrijvingen</a></li>
+                      <li class="li-item"><a href="{{ path('inschrijvingen') }}">Toon inschrijvingen</a></li>
+                      <li class="li-item"><a href="{{ path('toon_wedstrijden') }}">Toon wedstrijden</a></li>
+                      <li class="li-item"><a href="{{ path('ranglijsten') }}">Toon ranglijsten</a></li>
+                      <li class="li-item"><a href="{{ path('deelnemer_contact') }}">Contactgegevens deelnemers</a></li>
+                    </ul>
+                  </li>
+                  {% endif %}
+                {% endif %}
+                </ul>
+            </div>
+        </nav>
+        {% elseif app.session.get('huidig_toernooi') %}
+        <nav class="navbar navbar-expand-sm not-sidebar" style="background-color:powderblue">
+            <div class="container-fluid" style="background-color:powderblue">
+                <ul class="navbar-nav">
+                  <li class="dropdown nav-item"><button class="dropdown-toggle dropdownbutton"  data-toggle="dropdown">Toernooi info<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li class="li-item"><a href="{{ path('statistieken_inschrijvingen') }}">Overzicht inschrijvingen</a></li>
+                      <li class="li-item"><a href="{{ path('inschrijvingen') }}">Toon inschrijvingen</a></li>
+                      <li class="li-item"><a href="{{ path('toon_wedstrijden') }}">Toon wedstrijden</a></li>
+                      <li class="li-item"><a href="{{ path('ranglijsten') }}">Standen per categorie</a></li>
+                    </ul>
+                </ul>
+            </div>
+        </nav>
+        {% endif %}
+
+        <div class="not-sidebar">
+        <div class="w3-container" style="margin-left:20px; margin-top:10px;">
+    
+        {% endblock %}
+        </div>
+        </div>
+
+        {% block javascripts %}
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        {# 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        #}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        {# <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> #}
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        {# <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> #}
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="{{ asset('js/toernooien.js') }}"></script>     
+        {% endblock %}
+    </body>
+</html>

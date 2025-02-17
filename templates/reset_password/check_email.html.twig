@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wachtwoord herstel email verstuurd{% endblock %}
+
+{% block content %}
+{{ parent() }}
+    <p>
+        Er is een email verstuurd met een link waarop u kunt klikken om uw wachtwoord te herstellen.
+{#      Deze link vervalt over {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}. #}
+        Deze link vervalt over {{ tokenLifeTime/60 }} minuten.
+    </p>
+    <p>Als u geen email ontvangen heeft, check uw spam folder of <a href="{{ path('app_forgot_password_request') }}" class="mylink">probeer het nogmaals</a>
+     over {{ requestThrottleTime/60 }} minuten.</p>
+{% endblock %}

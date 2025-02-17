@@ -1,0 +1,41 @@
+<h2>Verhinderingen</h2>
+<div class="mycontainer narrow60">
+{% if verhinderingen|length ==0 %}
+    <p>Geen verhinderingen opgegeven</p>
+{% endif %}
+    {% set eerste_dag = date(toernooi.getEersteDag()) %}
+    {% set toernooi_status = toernooi.getToernooiStatus() %}
+{% for verhindering in verhinderingen %}
+    {% set offset = verhindering.dagnummer-1 %}
+    {% set datum = eerste_dag|date_modify("+" ~ offset ~ " day")|date("D d-m-Y")   %}
+    <div class="w3-row w3-border w3-border-red w3-margin">
+    <div class="w3-row w3-margin-left w3-margin-top"><b>Datum: {{ datum }}</b></div>
+    <div class="w3-row">
+    <span class="w3-col s9">
+    {% if verhindering.hele_dag %}
+        <input type="checkbox" id="hele_dag" class="form-check-input my-margin-left-1" checked="checked" readonly>
+        <label class="form-check-label my-margin-left-2" for="hele_dag">Hele dag</label>
+    {% else %}
+        <div class="w3-margin">
+        <div class="w3-col s2"><b>Van:</b></div>
+        <div class="w3-col s2 w3-border w3-border-blue">{{ verhindering.begintijd|slice(0,5) }}</div>
+        <div class="w3-col s2 w3-margin-left"><b>Tot:</b></div>
+        <div class="w3-col s2 w3-border w3-border-blue">{{ verhindering.eindtijd|slice(0,5) }}</div>
+        </div>
+    {% endif %}
+    </span>
+    <button class="newbutton" title="Wijzig" data-id = "{{ verhindering.id }}"
+            data-wedstrijd_wijziging_id = "{{ wedstrijd_wijziging_id }}"
+            onclick = "wijzigVerhindering(this);"><b>Wijzig</b></button>
+    </div>
+    </div>
+{% endfor %}
+    <div class="w3-row" style="padding:20px">
+        <a class="newbutton" href="{{ path('nieuweVerhindering', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id}) }}">Nieuwe verhindering</a>
+        {% if toernooi_status == "spelen" %}
+            <a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_verh_ok', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id}) }}">Sluit</a>
+        {% else %}
+            <a class="newbutton" href="{{ path('home') }}">Sluit</a>
+        {% endif %}
+    </div>
+</div>

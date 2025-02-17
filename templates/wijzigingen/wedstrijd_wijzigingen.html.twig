@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="container">
+<h2>Wedstrijd wijzigingen die nog niet door iedereen bevestigd zijn:</h2>
+<table>
+<th>Actie</th>
+<th>Categorie</th>
+<th>Van(dag)</th>
+<th>Van(tijd)</th>
+<th>Naar(dag)</th>
+<th>Naar(tijd)</th>
+<th>Speler 1</th>
+<th>Partner 1</th>
+<th>Speler 2</th>
+<th>Partner 2</th>
+<tr>
+{% for wedstrijd in wedstrijd_wijzigingen %}
+<td style="color:blue; font-weight:bold; font-size:large" class="hover">
+{% if wedstrijd['actie'] == "verplaatsen" %}
+<i class="fa-solid fa-clock-rotate-left"></i>
+<div class='tooltip'>verplaatsen</div>
+{% endif %}
+{% if wedstrijd['actie'] == "afzeggen" %}
+<i class="fa-solid fa-calendar-minus"></i>
+<div class='tooltip'>afzeggen</div>
+{% endif %}
+{% if wedstrijd['actie'] == "toevoegen" %}
+<i class="fa-solid fa-calendar-plus"></i>
+<div class='tooltip'>toevoegen</div>
+{% endif %}
+</td>
+<td>{{ wedstrijd['categorie'] }}</td>
+<td>{{ wedstrijd['dagnummer_oud'] }}</td>
+<td>{{ wedstrijd['starttijd_oud'] }}</td>
+<td>{{ wedstrijd['dagnummer_nieuw'] }}</td>
+<td>{{ wedstrijd['starttijd_nieuw'] }}</td>
+{% if wedstrijd['cat_type'] == "dubbel" %}
+<td class='hover' onclick="toggleAkkoord(this)">
+<input type='checkbox' id={{ wedstrijd['speler1'] }} data-herplanoptie={{ wedstrijd['herplan_optie_id'] }} {% if wedstrijd['speler_1_akkoord'] %} checked {% endif %}> {{ wedstrijd['naam_speler1'] }}
+<div class='tooltip'>{% if wedstrijd['speler_1_akkoord'] %}Bevestigd{% else %}Niet Bevestigd{% endif %}</div>
+</td>
+<td class='hover' onclick="toggleAkkoord(this)">
+<input type='checkbox' id={{ wedstrijd['partner1'] }} data-herplanoptie={{ wedstrijd['herplan_optie_id'] }} {% if wedstrijd['partner_1_akkoord'] %} checked {% endif %}> {{ wedstrijd['naam_partner1'] }}
+<div class='tooltip'>{% if wedstrijd['partner_1_akkoord'] %}Bevestigd{% else %}Niet Bevestigd{% endif %}</div>
+</td>
+<td class='hover' onclick="toggleAkkoord(this)">
+<input type='checkbox' id={{ wedstrijd['speler2'] }} data-herplanoptie={{ wedstrijd['herplan_optie_id'] }} {% if wedstrijd['speler_2_akkoord'] %} checked {% endif %}> {{ wedstrijd['naam_speler2'] }}
+<div class='tooltip'>{% if wedstrijd['speler_2_akkoord'] %}Bevestigd{% else %}Niet Bevestigd{% endif %}</div>
+</td>
+<td class='hover' onclick="toggleAkkoord(this)">
+<input type='checkbox' id={{ wedstrijd['partner2'] }} data-herplanoptie={{ wedstrijd['herplan_optie_id'] }} {% if wedstrijd['partner_2_akkoord'] %} checked {% endif %}> {{ wedstrijd['naam_partner2'] }}
+<div class='tooltip'>{% if wedstrijd['partner_2_akkoord'] %}Bevestigd{% else %}Niet Bevestigd{% endif %}</div>
+</td>
+{% else %}
+<td class='hover' onclick="toggleAkkoord(this)">
+<input type='checkbox' id={{ wedstrijd['speler1'] }} data-herplanoptie={{ wedstrijd['herplan_optie_id'] }} {% if wedstrijd['speler_1_akkoord'] %} checked {% endif %}> {{ wedstrijd['naam_speler1'] }}
+<div class='tooltip'>{% if wedstrijd['speler_1_akkoord'] %}Bevestigd{% else %}Niet Bevestigd{% endif %}</div>
+</td>
+<td>-</td>
+<td class='hover' onclick="toggleAkkoord(this)">
+<input type='checkbox' id={{ wedstrijd['speler2'] }} data-herplanoptie={{ wedstrijd['herplan_optie_id'] }} {% if wedstrijd['speler_2_akkoord'] %} checked {% endif %}> {{ wedstrijd['naam_speler2'] }}
+<div class='tooltip'>{% if wedstrijd['speler_2_akkoord'] %}Bevestigd{% else %}Niet Bevestigd{% endif %}</div>
+</td></td>
+<td>-</td>
+{% endif %}
+{% if wedstrijd['actie'] == "verplaatsen" or wedstrijd['actie'] == "toevoegen" %}
+<td><button class="newbutton" onclick="verplaats_wedstrijd({{ wedstrijd['wedstrijd_id'] }})">Ander tijdstip</button></td>
+<td><button class="newbutton" onclick="afzeggen_wedstrijd({{ wedstrijd['wedstrijd_id'] }})">Afzeggen</button></td>
+{% else %}
+<td></td>
+<td></td>
+{% endif %}
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+{% if wedstrijd['cat_type'] == "dubbel" %}
+<td>{{ wedstrijd['tel_speler1'] }}</td>
+<td>{{ wedstrijd['tel_partner1'] }}</td>
+<td>{{ wedstrijd['tel_speler2'] }}</td>
+<td>{{ wedstrijd['tel_partner2'] }}</td>
+{% else %}
+<td>{{ wedstrijd['tel_speler1'] }}</td>
+<td></td>
+<td>{{ wedstrijd['tel_speler2'] }}</td>
+<td></td>
+{% endif %}
+</tr>
+{% endfor %}
+</tr>
+</table>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src= "{{ asset('js/wedstrijd_wijzigingen.js')}}" ></script>
+{% endblock %}

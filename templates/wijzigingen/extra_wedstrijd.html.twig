@@ -1,0 +1,31 @@
+{% extends 'wijzigingen/wijzigingen_template.html.twig' %}
+
+{% block pagina_titel %}
+Extra wedstrijd aanbieden
+{% endblock %}
+
+{% block aanhef %}
+De volgende extra wedstrijd kan worden ingepland:
+{% endblock %}
+
+{% block afsluiting %}
+Klik "Verzend" om deze extra wedstrijd voorlopig in te plannen, de berichten naar de deelnemers te verzenden en te zoeken naar een volgende extra wedstrijd
+<br>
+Klik "Overslaan" om deze wedstrijd niet in te plannen en te zoeken naar een volgende extra wedstrijd
+<br>
+Klik "Stop" om deze wedstrijd niet in te plannen en te stoppen met zoeken naar extra wedstrijden
+<br>
+Klik "Automatisch" om deze en alle andere mogelijke extra wedstrijden in te plannen en de berichten te verzenden
+<br>
+{% endblock %}
+
+{% block buttons %}
+<a class="newbutton" href="{{ path('verzend_extra_wedstrijd', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'verzend'}) }}">Verzend</a>
+<a class="newbutton" href="{{ path('verzend_extra_wedstrijd', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'overslaan'}) }}">Overslaan</a>
+<a class="newbutton" href="{{ path('verzend_extra_wedstrijd', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'stop'}) }}">Stop</a>
+<a class="newbutton" href="{{ path('verzend_extra_wedstrijd', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'automatisch'}) }}">Automatisch</a>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

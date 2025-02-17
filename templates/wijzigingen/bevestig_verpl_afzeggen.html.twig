@@ -1,0 +1,24 @@
+{% extends 'wijzigingen/wijzigingen_template.html.twig' %}
+
+{% block pagina_titel %}
+    {{parent()}}, stap 3
+{% endblock %}
+
+{% block aanhef %}
+U wilt de volgende wedstrijd verplaatsen:
+{% endblock %}
+
+{% block afsluiting %}
+Er is geen mogelijkheid meer voor het verplaatsen van deze wedstrijd, deze kan alleen nog afgezegd worden.
+{% endblock %}
+
+{% block buttons %}
+<a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'afzeggen'}) }}">Afzeggen</a>
+{% if indiener_veranderd == false %}
+<a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'niet verplaatsen'}) }}">Niet verplaatsen</a>
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

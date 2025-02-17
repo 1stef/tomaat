@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="container">
+De toernooistatus is nu: {{ toernooi_status }}
+<br>
+<br>
+{% if (result[0]=="OK") %}
+De inschrijving is nu geopend voor het publiek!
+{% else %}
+De inschrijving openen kan nog niet, maak eerst onderstaande acties af:
+{% for actie in result %}
+<li>{{ actie }}</li>
+{% endfor %}
+{% endif %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

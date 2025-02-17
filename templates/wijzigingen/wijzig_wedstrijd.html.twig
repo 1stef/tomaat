@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Geplande wedstrijd wijzigen, stap 1{% endblock %}
+
+{% block content %}
+{{ parent() }}
+    <h4>Geplande wedstrijd wijzigen, stap 1</h4>
+    <br>
+    <h3>Selecteer de wedstrijd die u wilt wijzigen:</h3>
+
+    {% set eerste_dag = date(toernooi.getEersteDag()) %}
+    <div class = "w3-row">
+      <h4>
+      <div class = "w3-col s1">Kies</div>
+      <div class = "w3-col s1">Cat</div>
+      <div class = "w3-col s2">Datum</div>
+      <div class = "w3-col s2">Tijd</div>
+      <div class = "w3-col s3">Speler/team 1</div>
+      <div class = "w3-col s3">Speler/team 2</div>
+      </h4>
+    </div>
+    <br>
+    {% for wedstrijd in wedstrijden %}
+      {% set offset = wedstrijd.dagnummer-1 %}
+      {% set datum = eerste_dag|date_modify("+" ~ offset ~ " day")|date("D d-m")   %}
+      <div class = "w3-row w3-bar-item">
+        {% set team1_class = "font-weight-normal" %}
+        {% set team2_class = "font-weight-normal" %}
+        <div class = "w3-col s1" style="text-align:left"><input type="radio" style="transform:scale(1.3)" value={{wedstrijd.wedstrijd_id}} name="kies_wedstrijd" onclick="clearmsg()"></div>
+        <div class = "w3-col s1">{{ wedstrijd.categorie }}</div>
+        <div class = "w3-col s2">{{ datum }}</div>
+        <div class = "w3-col s2">{{ wedstrijd.starttijd }}</div>
+        <div class = "w3-col s3 {{ team1_class }}">{{ wedstrijd.naam1A }}</div>
+        <div class = "w3-col s3 {{ team2_class }}">{{ wedstrijd.naam2A }}</div>
+      </div>
+      {% if (wedstrijd.cat_type == "dubbel") %}
+      <div class = "w3-row">
+        <div class = "w3-col s1">&nbsp</div>
+        <div class = "w3-col s1">&nbsp</div>
+        <div class = "w3-col s2">&nbsp</div>
+        <div class = "w3-col s2">&nbsp</div>
+        <div class = "w3-col s3 {{ team1_class }}">{{ wedstrijd.naam1B }}</div>
+        <div class = "w3-col s3 {{ team2_class }}">{{ wedstrijd.naam2B }}</div>
+      </div>
+      {% endif %}
+      <br>
+    {% endfor %}
+    <div id="msg" style="color:red;font-size:14pt;visibility:hidden">Kies een wedstrijd</div>
+    <div>
+    <button onclick='verplaatsen()' class="newbutton">Verplaatsen</button>
+    <button onclick='afzeggen()' class="newbutton">Afzeggen</button>
+    <button onclick='cancel()' class="newbutton">Niet wijzigen</button>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src= "{{ asset('js/wijzig_wedstrijd.js')}}" ></script>
+{% endblock %}

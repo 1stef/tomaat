@@ -1,0 +1,8 @@
+<h1>Herstel wachtwoord</h1>
+
+<p>Klik op de volgende link om uw wachtwoord te herstellen</p>
+
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+
+<p>Deze link vervalt over {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+

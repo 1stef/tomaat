@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mijn berichten{% endblock %}
+
+{% block content %}
+{{ parent() }}
+    <h3>Ontvangen berichten</h3>
+    <table>
+    <th></th>
+    <th>Toernooi</th>
+    <th>Van</th>
+    <th>Wanneer</th>
+    <th>Titel</th>
+    {% for bericht in ontvangen_berichten %}
+    <tr>
+    <td><a class="newbutton" href = "{{path('toon_bericht', {'bericht_id':bericht['id']}) }}">Open</a></td>
+    <td>{{ bericht['toernooi_naam'] }}</td>
+    <td>{{ bericht['van'] }}</td>
+    <td>{{ bericht['verzend_tijd'] }}</td>
+    <td>{{ bericht['titel']}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    <br>
+    <h3>Verzonden berichten</h3>
+    <table>
+    <th></th>
+    <th>Toernooi</th>
+    <th>Aan</th>
+    <th>Wanneer</th>
+    <th>Titel</th>
+    {% for bericht in verzonden_berichten %}
+    <tr>
+    <td><a class="newbutton" href = "{{path('toon_bericht', {'bericht_id':bericht['id']}) }}">Open</a></td>
+    <td>{{ bericht['toernooi_naam'] }}</td>
+    <td>{{ bericht['ontvanger1'] }}, {{ bericht['ontvanger2'] }}, {{ bericht['ontvanger3'] }}, {{ bericht['ontvanger4'] }}</td>
+    <td>{{ bericht['verzend_tijd'] }}</td>
+    <td>{{ bericht['titel']}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

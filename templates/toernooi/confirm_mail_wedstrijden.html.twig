@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="container">
+<form action={{ path('communiceer_wedstrijden')}} method="post">
+<h2>Alle geplande wedstrijden voor {{ toernooi_naam }} nu versturen?</h2>
+{% if blokkeer_mails %}
+<p style="color:red">
+Dit toernooi is aangemerkt als een test-toernooi. Er worden daarom geen mails gestuurd.
+Als dit een echt toernooi was zou er nu {{ aantal_mails }} mails verstuurd worden aan de inschrijvers.
+Om dan zeker te weten dat dit de bedoeling is, wordt eerst de vraag hieronder ter bevestiging gesteld.
+</p>
+{% endif %}
+<p>
+Let op!! U gaat {{ aantal_mails }} mails met notificaties voor geplande wedstrijden versturen voor toernooi: {{ toernooi_naam }}.
+<br>
+Wilt u doorgaan?
+<p>
+<input type="hidden" name="token" value="{{ csrf_token('mail_alle_wedstrijden') }}"/>
+
+<button type="submit" class="newbutton">Ja, versturen</button>
+<a href= {{ path('home') }} class="newbutton">Nee</a>
+</form>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mijn wedstrijden{% endblock %}
+
+{% block content %}
+{{ parent() }}
+    <h3>Wedstrijden van {{ naam }} voor toernooi: {{ toernooi.getToernooiNaam() }}</h3>
+
+    {% set eerste_dag = date(toernooi.getEersteDag()) %}
+    <div class = "w3-row">
+      <h4>
+      <div class = "w3-col s1">Cat</div>
+      <div class = "w3-col s2">Wanneer</div>
+      <div class = "w3-col s3">Speler/team 1</div>
+      <div class = "w3-col s3">Speler/team 2</div>
+      <div class = "w3-col s3">Uitslag</div>
+      </h4>
+    </div>
+    <br>
+    {% set explain = 0 %}
+    {% for wedstrijd in wedstrijden %}
+      {% set offset = wedstrijd.dagnummer-1 %}
+      {% set datum = eerste_dag|date_modify("+" ~ offset ~ " day")|date("D d-m")   %}
+      <div class = "w3-row">
+        {% set team1_class = "font-weight-normal" %}
+        {% set team2_class = "font-weight-normal" %}
+        {% set afzeg_status = " " %}
+        {% set verplaats_status = " " %}
+        {% set akkoord1A = " "%}
+        {% set akkoord1B = " "%}
+        {% set akkoord2A = " "%}
+        {% set akkoord2B = " "%}
+        {% set reageer = 0 %}
+        {% if (wedstrijd.speler_1_akkoord == '0') %}
+          {% set akkoord1A = " geen_akkoord " %}
+          {% set explain = 1 %}
+        {% endif %}
+        {% if ((wedstrijd.cat_type == "dubbel") and (wedstrijd.partner_1_akkoord == '0')) %}
+          {% set akkoord1B = " geen_akkoord " %}
+          {% set explain = 1 %}
+        {% endif %}
+        {% if (wedstrijd.speler_2_akkoord == '0') %}
+          {% set akkoord2A = " geen_akkoord " %}
+          {% set explain = 1 %}
+        {% endif %}
+        {% if ((wedstrijd.cat_type == "dubbel") and (wedstrijd.partner_2_akkoord == '0')) %}
+          {% set akkoord2B = " geen_akkoord " %}
+          {% set explain = 1 %}
+        {% endif %}
+        {% if wedstrijd.actie == "afzeggen" %}
+          {% set afzeg_status = " afgezegd " %}
+        {% endif %}
+        {% if wedstrijd.actie == "verplaatsen" and wedstrijd.wijziging_status == "verstuurd" %}
+          {% set verplaats_status = " verplaatst " %}
+        {% endif %}
+        {% if (wedstrijd.winnaar == 1) %}
+          {% set team1_class = "font-weight-bold" %}
+        {% endif %}
+        {% if (wedstrijd.winnaar == 2) %}
+          {% set team2_class = "font-weight-bold" %}
+        {% endif %}
+        {% if ((app.user.id == wedstrijd.speler1 and wedstrijd.speler_1_akkoord == '0') or
+               (app.user.id == wedstrijd.partner1 and wedstrijd.partner_1_akkoord == '0') or
+               (app.user.id == wedstrijd.speler2 and wedstrijd.speler_2_akkoord == '0') or
+               (app.user.id == wedstrijd.partner2 and wedstrijd.partner_2_akkoord == '0')) %}
+          {% set reageer = 1 %}
+        {% endif %}
+        <div class = "w3-col s1 {{ afzeg_status }}">{{ wedstrijd.categorie }}</div>
+        <div class = "w3-col s2 {{ afzeg_status }}{{ verplaats_status }}">{{ datum }}, {{ wedstrijd.starttijd }}</div>
+        <div class = "w3-col s3 {{ afzeg_status }}{{ team1_class }}{{ akkoord1A }}">{{ wedstrijd.naam1A }}</div>
+        <div class = "w3-col s3 {{ afzeg_status }}{{ team2_class }}{{ akkoord2A }}">{{ wedstrijd.naam2A }}</div>
+        {% if (wedstrijd.wedstrijd_status == "gespeeld") %}
+          <div class = "w3-col s3">
+            {{wedstrijd.set1_team1}}-{{wedstrijd.set1_team2}}, {{wedstrijd.set2_team1}}-{{wedstrijd.set2_team2}}, {{wedstrijd.set3_team1}}-{{wedstrijd.set3_team2}}
+            {% if wedstrijd.opgave >= 1 %}
+              <i class="fas fa-2x fa-user-injured"></i>
+            {% endif %}
+          </div>
+        {% endif %}
+        {% if (wedstrijd.wedstrijd_status == "spelend") %}
+          <div class = "w3-col s1">
+            <button type="button" id="button_speler_uitslag" class="newbutton" data-toggle="modal" data-target="#modalCheckVerliezer">Uitslag invoeren</button>
+          </div>
+          {{include('wedstrijden/__check_verliezer.html.twig')}}
+        {% endif %}
+        {% if reageer == 1 %}
+          <div class = "w3-col s1">
+            <a class="newbutton" href="{{path('wizard_wijzig_wedstrijd_reageer', {'wedstrijd_wijziging_id' : wedstrijd.wedstrijd_wijziging_id})}}" style="font-size:13px; background-color:red!important">Reageer</a>
+          </div>
+        {% endif %}
+      </div>
+      {% if (wedstrijd.cat_type == "dubbel") %}
+      <div class = "w3-row">
+        <div class = "w3-col s1">&nbsp</div>
+        <div class = "w3-col s2">&nbsp</div>
+        <div class = "w3-col s3 {{ afzeg_status }}{{ team1_class }}{{ akkoord1B }}">{{ wedstrijd.naam1B }}</div>
+        <div class = "w3-col s3 {{ afzeg_status }}{{ team2_class }}{{ akkoord2B }}">{{ wedstrijd.naam2B }}</div>
+      </div>
+      {% endif %}
+      <br>
+    {% endfor %}
+    {% if (explain == 1) %}
+      <div>Spelers met namen in <span class="geen_akkoord">oranje</span> hebben de wedstrijd-wijziging nog niet bevestigd</div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

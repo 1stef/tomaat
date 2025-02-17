@@ -1,0 +1,352 @@
+body {
+    background-color: powderblue;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.statuscontainer {
+    background-color: blueviolet;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+td,
+th {
+    border: 1px solid red;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.button-visible {
+    visibility: visible;
+}
+
+.button-hidden {
+    visibility: hidden;
+}
+
+.modal-content {
+    position: relative;
+    background-color: powderblue;
+    background-clip: padding-box;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    outline: 0
+}
+
+.modal-bg {
+    background-color: blue;
+}
+
+mylabel {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+  }
+
+.mycontainer {
+    width: 100%;
+    border-radius: 5px;
+    padding: 20px;
+    border: 1px solid red;
+    opacity: 1.0;
+}
+
+.mycontainer-no-border {
+    width: 100%;
+    border-radius: 5px;
+    padding: 20px;
+    opacity: 1.0;
+}
+
+.form-col {
+    float: left;
+    width: 40%;
+    margin-top: 6px;
+    padding-right : 12px;
+}
+
+  
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+    padding-right : 12px;
+}
+.mybutton {
+    margin-left : 12px;
+    margin-top: 6px;
+    white-space: nowrap;
+}
+
+.narrowform {
+    max-width: 600px;
+    float: left;
+}
+
+.errorclass {
+    float : right;
+}
+
+.feedback_message {
+    color : red;
+    font-style : bold;
+    font-size: 16pt;
+}
+  
+.max-75 {
+    max-width: 50%;
+}
+
+.my-dropdown-header {
+    color:  black;
+    font-style : bold;
+    font-size: 16pt;
+}
+
+.hover {
+    position:relative;
+    margin: 10px;
+}
+
+.tooltip {
+  top:20px;
+  left:40px;
+  background-color: blue;
+  width: auto;
+  height: auto;
+  color: white;
+  font-size: 12pt;
+  border-radius:5px;
+  opacity: 0;
+  z-index: 1;
+  -webkit-transition: opacity 0.5s;
+  -moz-transition:  opacity 0.5s;
+  -ms-transition: opacity 0.5s;
+  -o-transition:  opacity 0.5s;
+  transition:  opacity 0.5s;
+}
+
+.hover:hover .tooltip {
+    opacity:1;
+}
+
+.bezet {
+    background-color: red;
+}
+
+.tt {
+    width : 300px;
+    text-align: justify;
+}
+
+.aanwezig {
+    background-color: rgb(140, 233, 140);
+}
+
+.verberg {
+    display: none;
+}
+
+.mybold {
+    font-weight: bold;
+}
+
+.newbutton {
+    /* w3col */
+    /* float: left; */
+    /* width: 100%; */
+    /* w3-button */
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* w3-blue */
+    color: #fff!important;
+    background-color: #2196F3!important;
+    /* w3-round-xlarge */
+    border-radius: 16px;
+    /* w3-small */
+    font-size: 15px;
+    /* w3-margin */
+    margin-left: 0px;
+    margin-right: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.newbutton:hover {
+    color: #000!important;
+    background-color: #ccc!important
+}
+
+.dropdownbutton {
+    font-size:14pt;
+    font-style:bold;
+    color:blue;
+    margin-right:15pt;
+}
+
+.li-item {
+    font-size:14pt;
+    color:blue;
+    white-space: nowrap;
+    margin-left: 4pt;
+    margin-right: 4pt;
+    z-index: 10;
+}
+
+.humanText {
+    max-width: 90ex;
+    font-size: 14pt;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+
+.mylink:link {
+    color: blue;
+    text-decoration: underline;
+    cursor: auto;
+}
+
+.mylink:visited {
+    color: purple;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.mylink:hover {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.mylink:active {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.narrow {
+    max-width: 50ex;
+}
+
+.narrow20 {
+    max-width: 20ex;
+}
+
+.narrow30 {
+    max-width: 30ex;
+}
+.narrow40 {
+    max-width: 40ex;
+}
+.narrow60 {
+    max-width: 60ex;
+}
+
+.narrowish {
+    max-width: 70ex;
+}
+
+.my-margin-left-1 {
+    margin-left: 32px;
+    margin-top:  12px;
+}
+.my-margin-left-2 {
+    margin-left: 52px;
+    margin-top:  8px;
+}
+
+.mobile-header {
+    display: block;
+    transition: display 0.5s;
+}
+
+.my-sidebar {
+    display: none;
+    width: 200px;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+}
+
+.not-sidebar {
+    margin-left:0px;
+    transition: margin-left 0.5s;
+}
+
+.logo-large {
+    display: none;
+}
+
+@media screen and (min-width: 900px) {
+    .mobile-header {
+        display: none;
+    }
+    .my-sidebar {
+        display: block;
+        width: 200px;
+        height: 100%;
+        position: absolute;
+        z-index: 2;
+    }
+    .not-sidebar {
+        margin-left:200px;
+        transition: margin-left 0.5s;
+    }
+   .logo-large {
+       display: block;
+   }
+}
+
+.selected_item {
+    border: 2px solid red;
+    background-color:hsl(240, 100%, 90%);
+}
+
+.afgezegd {
+    text-decoration-line: line-through;
+    color : gray;
+}
+
+.verplaatst {
+    color:red;
+    font-weight: bold;
+}
+
+.geen_akkoord {
+    color: orangered;
+    font-weight: bold;
+}
+
+.kop_op {
+    font-family: cursive;
+    font-size: 20px;
+}

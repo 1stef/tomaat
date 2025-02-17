@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}Speeltijden{% endblock %} 
+
+{% block content %}
+{{ parent() }}
+<h2>Speeltijden</h2>
+{% form_theme speeltijdenForm 'bootstrap_4_horizontal_layout.html.twig' %}
+<div style="max-width:800px">
+{{ form_start(speeltijdenForm) }}
+{{ form_errors(speeltijdenForm) }}
+{{ form_widget(speeltijdenForm.toernooi_id, {'attr':{'style':'display:none'}}) }}
+{% for row in speeltijdenForm.speeltijden %}
+   {{ form_widget(row.id, {'attr':{'style':'display:none'}}) }}
+   {{ form_widget(row.toernooi_id, {'attr':{'style':'display:none'}}) }}
+   {{ form_row(row.dagnummer) }}
+   {{ form_row(row.wedstrijd_duur) }}
+   {{ form_row(row.starttijd) }}
+   {{ form_row(row.eindtijd) }}
+{% endfor %}
+<div class="form-group">        
+<div class="col-sm-offset-2 col-sm-10">
+    <input type="hidden" name="speeltijden" value="1">
+    <button class="btn btn-default">Opslaan</button>
+    <a class="btn btn-default" href="{{ path('home') }}">Cancel</a>
+</div>
+</div>
+{# {{ dump(speeltijdenForm) }} #}
+{{ form_end(speeltijdenForm) }}
+</div>
+{% endblock %}
+

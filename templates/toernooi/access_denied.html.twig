@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="bg">
+</div>
+
+<div class="container">
+<h2>U heeft geen toegang tot deze functie voor dit toernooi, of het toernooi heeft niet de juiste status</h2>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src= "{{ asset('js/home.js')}}" ></script>
+{% endblock %}

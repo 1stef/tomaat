@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Geplande wedstrijd wijzigen, stap 4{% endblock %}
+
+{% block content %}
+{{ parent() }}
+    <h4>Geplande wedstrijd wijzigen, stap 4</h4>
+    <br>
+    <h3>
+      Geef een toelichting voor uw tegenstander(s), evt. dubbelpartner en toernooileiding (geen medische details, s.v.p).
+      <br>
+    </h3>
+      {% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+      {{ form_start(form) }}
+      {{ form_widget(form.titel, {'attr': {'style':'display:none'}}) }}
+      {{ form_widget(form.tekst, {'label': 'Toelichting:'}) }}
+      {{ form_widget(form.wedstrijd_wijziging_id, {'attr':{'style':'display:none'}}) }}
+      {{ form_widget(form.afzender, {'attr':{'style':'display:none'}}) }}
+      {{ form_widget(form.ontvanger_1, {'attr':{'style':'display:none'}}) }}
+      {{ form_widget(form.ontvanger_2, {'attr':{'style':'display:none'}}) }}
+      {{ form_widget(form.ontvanger_3, {'attr':{'style':'display:none'}}) }}
+      {{ form_widget(form.berichttype, {'attr':{'style':'display:none'}}) }}
+      <button name="verstuur" class="newbutton">Verstuur</button>
+      {# <button name="niet_wijzigen" class="newbutton">Niet wijzigen</button> #}
+      {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

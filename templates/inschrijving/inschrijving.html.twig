@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/inschrijving.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}Inschrijving{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div>
+  <div class="mycontainer-no-border narrow60">
+    <h2 style="text-align:center">Inschrijving</h2>
+  </div>
+    {{ include ('deelnemer_account/__account.html.twig', {'accountForm' : accountData}) }}
+    {% form_theme inschrijvingForm 'form/my_form_theme.html.twig' %}
+    {{ form_start(inschrijvingForm, {attr : {'novalidate' : 'novalidate'}}) }}
+        <h2>Inschrijving gegevens</h2>
+        <div class="row">
+        {{ form_errors(inschrijvingForm) }}
+        </div>
+      <div class="mycontainer narrow60">
+        <div class="row">
+        {{ form_widget(inschrijvingForm.toernooi_id, {'attr':{'style':'display:none'}}) }}
+        </div>
+        <div class="row">
+        {{ form_widget(inschrijvingForm.deelnemerA, {'attr': {'style':'display:none'}}) }}
+        </div>
+        <div class="row">
+        {{ form_widget(inschrijvingForm.inschrijving_id_1, {'attr': {'style':'display:none'}}) }}
+        </div>
+        <div class="row">
+        {{ form_label(inschrijvingForm.categorie_1, "Categorie 1") }}
+        {{ form_widget(inschrijvingForm.categorie_1, {'attr': {'class': 'form-col', 'class':'narrow20'}}) }}
+        {{ form_widget(inschrijvingForm.cat_type_1, {'attr': {'style':'display:none'}}) }}
+        </div>
+        <div class="row">
+        {{ form_label(inschrijvingForm.deelnemerB_1, "Bondsnr dubbelpartner") }}
+        {#{{ form_widget(inschrijvingForm.deelnemerB_1) }}#}
+        {{ form_widget(inschrijvingForm.deelnemerB_1, {'attr': {'class': 'form-col', 'class':'narrow20'}}) }}
+        </div>
+        <div class="row">
+        {{ form_label(inschrijvingForm.aantal_1, "Aantal wedstrijden") }}
+        {#{{ form_widget(inschrijvingForm.aantal_1) }}#}
+        {{ form_widget(inschrijvingForm.aantal_1, {'attr': {'class': 'form-col', 'class':'narrow20'}}) }}
+        </div>
+        <hr style="color:solid red">
+        <div class="row">
+        {{ form_widget(inschrijvingForm.inschrijving_id_2, {'attr': {'style':'display:none'}}) }}
+        </div>
+        <div class="row">
+        {{ form_label(inschrijvingForm.categorie_2, "Categorie 2") }}
+        {{ form_widget(inschrijvingForm.categorie_2, {'attr': {'class': 'form-col', 'class':'narrow20'}}) }}
+        {{ form_widget(inschrijvingForm.cat_type_2, {'attr': {'style':'display:none'}}) }}
+        </div>
+        <div class="row">
+        {{ form_label(inschrijvingForm.deelnemerB_2, "Bondsnr dubbelpartner") }}
+        {{ form_widget(inschrijvingForm.deelnemerB_2, {'attr': {'class':'narrow20'}}) }}
+        </div>
+        <div class="row">
+        {{ form_label(inschrijvingForm.aantal_2, "Aantal wedstrijden") }}
+        {{ form_widget(inschrijvingForm.aantal_2, {'attr': {'class':'narrow20'}}) }}
+        </div>
+        <hr style="color:solid red">
+        <div class="row">
+        {{ form_label(inschrijvingForm.categorie_3, "Categorie 3") }}
+        {{ form_widget(inschrijvingForm.categorie_3, {'attr': {'class': 'form-col', 'class':'narrow20'}}) }}
+        {{ form_widget(inschrijvingForm.cat_type_3, {'attr': {'style':'display:none'}}) }}
+        </div>
+        <div class="row">
+        {{ form_widget(inschrijvingForm.inschrijving_id_3, {'attr': {'style':'display:none'}}) }}
+        </div>
+        <div class="row">
+        {{ form_label(inschrijvingForm.deelnemerB_3, "Bondsnr dubbelpartner") }}
+        {{ form_widget(inschrijvingForm.deelnemerB_3, {'attr': {'class':'narrow20'}}) }}
+        </div>
+        <div class="row">
+        {{ form_label(inschrijvingForm.aantal_3, "Aantal wedstrijden") }}
+        {{ form_widget(inschrijvingForm.aantal_3, {'attr': {'class':'narrow20'}}) }}
+        </div>
+        <div class="w3-row" style="padding:20px">
+          <button class="newbutton">Opslaan</button>
+          <a class="newbutton" href="{{ path('home') }}">Cancel</a>
+        </div>
+       </div>
+    {# {{ dump(inschrijvingForm) }} #}
+    {{ form_end(inschrijvingForm) }}
+    </div>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/inschrijving.js') }}"></script>
+{% endblock %}

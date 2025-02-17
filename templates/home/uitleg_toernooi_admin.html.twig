@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="bg">
+</div>
+
+<div class="container humanText">
+<h1>Uitleg voor toernooi administrators</h1>
+<p>
+Het toernooi doorloopt de volgende statussen: aangevraagd, voorbereiden inschrijving,
+inschrijven, plannen, spelen en afgerond. Statussen kunnen ook teruggezet worden, maar je moet goed
+beseffen wat de gevolgen kunnen zijn. Als de wedstrijden bijv. gepland zijn en gemaild naar de deelnemers, wil
+je niet zo maar opnieuw plannen en mailen.
+<h2>Status: aangevraagd</h2>
+Bij de aanvraag van het toernooi wordt o.a. de startdatum van het toernooi en het aantal toernooidagen
+vastgelegd. Deze gegevens, die van belang zijn voor het inschrijven en het plannen van de wedstrijden,
+kunnen alleen door de aanvrager van het toernooi gewijzigd worden. Toernooi administrators kunnen de
+aanvraaggegevens wel bekijken via het drop-down menu "Overzichten".
+<h2>Status: voorbereiden inschrijving</h2>
+In deze fase moeten de toernooigegevens ingevoerd worden die van belang zijn voor het inschrijven
+en het plannen van de wedstrijden na het inschrijven. De categorieen geven uiteraard aan in welke categorieën er gespeeld
+gaat worden. De naam van iedere categorie is vrij te kiezen; je moet van iedere categorie aangeven of dit een
+enkel- of dubbelcategorie is. De speeltijden laten de deelnemers per toernooidag zien wanneer er gespeeld
+wordt en waar je dus evt. verhinderingen voor kunt opgeven. Ze zijn ook van belang voor het plannen van
+wedstrijden.
+<br>
+Als de toernooigegevens compleet zijn, kun je "Toon capaciteit" aanroepen. Daarmee zie je in een grafiekje
+hoeveel wedstrijden er per dag gepland kunnen worden.
+<br>
+Om de inschrijving open te stellen, roep je "Start inschrijving" aan.
+</p>
+<h2>Status: inschrijven</h2>
+Tijdens het inschrijven door deelnemers kun je als toernooi administrator de inschrijvingen bekijken via
+het dropdown menu "Tijdens inschrijving". Als het tijd is om de inschrijving te sluiten, roep je "Sluit
+inschrijving" aan.
+<h2>Status: plannen</h2>
+De belangrijkste actie in status "plannen" is "Plan wedstrijden". Hiermee plan je alle wedstrijden in.
+Daarna kun je de wedstrijden bekijken en filteren per categorie en per dag.
+<br>
+"Communiceer wedstrijden" stuurt alle deelnemers een mail sturen met hun geplande wedstrijden.
+<br>
+De functie "Start toernooi" start het toernooi.
+<h2>Status: spelen</h2>
+Bij de start van het toernooi is het verstandig om een uitdraai te maken van alle geplande wedstrijden, als
+fallback voor storingen van de website of het eigen internet. Toernooi op Maat is wel ontworpen om het
+alle handelingen tijdens het toernooi te ondersteunen. Toewijzen van een baan bij de start van een wedstrijd,
+uitslag invoeren, evt. herplannen van wedstrijden, etc.
+<br>
+Het starten van een wedstrijd en later invoeren van de uitslag doe je vanuit het dashboard. Het dashboard toont
+de baanbezetting en de wedstrijden van de huidige speeldag, onderverdeeld in wedstrijden die gepland zijn, wedstrijden die
+wachten tot er een baan vrij komt, lopende wedstrijden en afgeronde wedstrijden. In de geplande wedstrijden
+kun je aanvinken welke deelnemers zich aanwezig gemeld hebben.
+<br>
+Als een wedstrijd verplaatst moet worden, kan dat in een paar stappen vanuit "zoek wedstrijd". Zoek de te
+verplaatsen wedstrijd door te filteren op speeldag en categorie. Klik op de verplaats button naast de
+wedstrijd en krijg een overzicht van beschikbare vrije tijdsloten, met daarbij informatie waarom bepaalde
+vrije tijdsloten in principe niet bruikbaar zijn, omdat een van de deelnemers een verhindering heeft opgegeven
+of een andere wedstrijd heeft. Als er een ander tijdslot gekozen en gereserveerd is, kan bij die reservering
+worden bijgehouden welke deelnemers akkoord zijn met het nieuwe tijdstip. Tenslotte wordt de reservering
+definitief gemaakt en is de wedstrijd verplaatst.
+<br>
+Als de toernooidag klaar is, zet je de speeldag vooruit in het "Spelen" menu. Als het hele toernooi klaar is,
+sluit je het toernooi af in het "Afronden" menu.
+<p></p>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src= "{{ asset('js/home.js')}}" ></script>
+{% endblock %}

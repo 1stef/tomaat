@@ -1,0 +1,25 @@
+<div id="modalAanvraag" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="aanvraagTitle">Aanvraag toernooi</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form class="form-horizontal" method="post" id='aanvraagForm_id'>
+                    <div class="form-group">
+                        <div class="col-sm-7">
+                            <h2 style="text-align:center;">Gegevens aangevraagd toernooi</h2>
+                        </div>
+                    </div>
+                    {{ include ('toernooi/__aanvraag.html.twig') }}
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="newbutton" data-dismiss="modal">Sluit</button>
+            </div>
+        </div>
+    </div>
+</div>

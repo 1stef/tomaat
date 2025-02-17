@@ -1,0 +1,50 @@
+{% extends 'wijzigingen/wijzigingen_template.html.twig' %}
+
+{% block pagina_titel %}
+    {{parent()}}, stap 3
+{% endblock %}
+
+{% block aanhef %}
+U wilt de volgende wedstrijd verplaatsen:
+{% endblock %}
+
+{% block afsluiting %}
+  Er zijn alleen opties waarbij u meer dan 1 wedstrijd op een dag speelt. Kies de optie die uw voorkeur heeft.
+  De wedstrijd kan verplaatst worden naar:
+  <br>
+  <br>
+  <div class = "w3-row">
+    <div class = "w3-col s4 w3-margin-bottom" style="font-weight:bold">&nbsp&nbsp&nbsp Datum, tijd</div>
+  </div>
+  {% set eerste_dag = date(toernooi.getEersteDag()) %}
+  {% set dagnr = 1 %}
+  {% for herplan_optie in herplan_opties %}
+  {% set offset = herplan_optie.dagnummer-1 %}
+  {% if herplan_optie.dagnummer != dagnr %}
+  <br>
+  {% endif %}
+  {% set dagnr = herplan_optie.dagnummer %}
+  {% set datum = eerste_dag|date_modify("+" ~ offset ~ " day")|date("D d-m")   %}
+  <div class = "w3-row">
+    <div class = "w3-col s4"><input type="radio" name="radio_herplan_opties" value="{{ herplan_optie.id }}">&nbsp  {{ datum }}, {{ herplan_optie.starttijd }}</div>
+  </div>
+  {% endfor %}
+{% endblock %}
+
+{% block buttons %}
+  <div id="msg" style="color:red;font-size:14pt;visibility:hidden">Kies een tijdstip</div>
+  <div>
+  <button class="newbutton" onclick="verplaatsOptie({{wedstrijd_wijziging_id}})">Verplaats</button>
+  <a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'afzeggen'}) }}">Afzeggen</a>
+  {% if indiener_veranderd == false %}
+  <a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'niet verplaatsen'}) }}">Niet verplaatsen</a>
+  {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+var user_id = {{ app.user.id }};
+</script>
+<script src="{{ asset('js/verplaats_opties.js')}}"></script>
+{% endblock %}

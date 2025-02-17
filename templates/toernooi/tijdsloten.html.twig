@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Overzicht Tijdsloten{% endblock %}
+
+{% block content %}
+{{ parent() }}
+    <h3>Overzicht maximum aantal wedstrijden per speeldag</h3>
+
+    <h4>{{ toernooi_naam }} </h4>
+    <p id="message_para" class="feedback_message"></p>
+    <div class = 'w3-container' style="width:60%">
+    <canvas id="myChart"></canvas>
+    </div>
+    <p>Maximum aantal wedstrijden voor hele toernooi: {{ totaal }}</p>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+  var tijdsloten = {{ tijdsloten|raw }};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="{{ asset('js/stat_tijdsloten.js')}}"></script>
+{% endblock %}

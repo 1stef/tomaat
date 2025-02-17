@@ -1,0 +1,24 @@
+{% extends 'wijzigingen/wijzigingen_template.html.twig' %}
+
+{% block pagina_titel %}
+    {{parent()}}, stap 2
+{% endblock %}
+
+{% block aanhef %}
+U wilt de volgende wedstrijd verplaatsen:
+{% endblock %}
+
+{% block afsluiting %}
+U heeft blijkbaar een nieuwe verhindering voor dit tijdstip. Voeg eerst de nieuwe verhindering toe en werk eventueel andere verhinderingen bij,
+zodat het systeem goed kan herplannen.
+{% endblock %}
+
+{% block buttons %}
+<div>
+    <a class="newbutton" href="{{ path('wijzig_verhinderingen', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id}) }}">Verhinderingen aanpassen</a>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

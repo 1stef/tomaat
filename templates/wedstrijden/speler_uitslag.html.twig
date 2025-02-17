@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+{{ parent() }}
+
+<div class="container narrowform">
+{% form_theme spelerUitslagForm 'bootstrap_4_horizontal_layout.html.twig' %}
+    <form class="form-horizontal" method="post">
+     <div class="form-group">
+       <div class="col-sm-7">
+         <h2 style="text-align:center;">Voer wedstrijd uitslag in</h2>
+       </div>
+     </div>
+     <div class="w3-row">
+       <div class="w3-col s4">Baan nummer:</div>
+       <div class="w3-col s4">
+          {{ form_widget(spelerUitslagForm.baan) }}
+       </div>
+     </div>
+     <div class="w3-row">
+       <div class="w3-col s4">Categorie:</div>
+       <div class="w3-col s4">{{ categorie }}</div>
+      </div>
+      <div class="w3-row s4">
+       <div class="w3-col s4">Datum:</div>
+       <div class="w3-col s4">{{ datum | format_date(pattern: 'EEEE d MMM Y') }}</div>
+      </div>
+     </div>
+     <div class="w3-row">
+        {{ form_errors(spelerUitslagForm) }}
+     </div>
+     <div class="form-group w3-row">
+     <table class=col-sm-5>
+     <tr><th></th><th>Team 1</th><th>Team 2</th></tr>
+     <tr><td>speler</td><td>{{ team1_speler1 }}</td><td>{{ team2_speler1 }}<td></tr>
+     <tr><td>partner</td><td>{{ team1_speler2 }}</td><td>{{ team2_speler2 }}<td></tr>
+     <tr><td>set 1</td><td>{{ form_widget(spelerUitslagForm.set1_team1) }}</td><td>{{ form_widget(spelerUitslagForm.set1_team2) }}<td></tr>
+     <tr><td>set 2</td><td>{{ form_widget(spelerUitslagForm.set2_team1) }}</td><td>{{ form_widget(spelerUitslagForm.set2_team2) }}<td></tr>
+     <tr><td>set 3</td><td>{{ form_widget(spelerUitslagForm.set3_team1) }}</td><td>{{ form_widget(spelerUitslagForm.set3_team2) }}<td></tr>
+     </table>
+     </div>
+
+     <div class="form-group w3-row">
+       <label class="control-label col-sm-3" for="winnaar">Winnaar:</label>
+       <div class="col-sm-3">
+          {{ form_widget(spelerUitslagForm.winnaar) }}
+          {# form_widget(spelerUitslagForm.winnaar, { 'attr': {'disabled': true}}) #}
+       </div>
+       <div class="col-sm-3 w3-row">
+          {{ form_errors(spelerUitslagForm.winnaar) }}
+       </div>
+     </div>
+     <div class="form-group w3-row">
+       <label class="control-label col-sm-3" for="opgave">Opgave:</label>
+       <div class="col-sm-3">
+          {{ form_widget(spelerUitslagForm.opgave) }}
+       </div>
+       <div class="col-sm-3">
+          {{ form_errors(spelerUitslagForm.opgave) }}
+       </div>
+     </div>
+     <div class="form-group w3-row">
+       <div class="col-sm-3">
+          {{ form_widget(spelerUitslagForm.wedstrijd_status, {'attr':{'style':'display:none'}}) }}
+       </div>
+       <div class="col-sm-3">
+          {{ form_errors(spelerUitslagForm.wedstrijd_status) }}
+       </div>
+     </div>
+
+     <div class="form-group">        
+       <div class="col-sm-offset-3 col-sm-9">
+         <input type="hidden" name="speler_uitslag" value="1">
+         <button class="newbutton">Submit</button>
+         <a class="newbutton" href="{{ path('mijn_wedstrijden') }}">Cancel</a>
+       </div>
+     </div>
+     {{ form_rest(spelerUitslagForm) }}
+     {#} {{ dump(spelerUitslagForm) }} #}
+     {# </form> #}
+     {# {{ form_row(spelerUitslagForm._token) }} #}
+     {{ form_end(spelerUitslagForm) }}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

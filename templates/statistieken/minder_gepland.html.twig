@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="container">
+<h3>Inschrijvingen met meer gevraagde wedstrijden dan nu gepland:</h3>
+<br>
+<table>
+<th>categorie</th>
+<th>naam</th>
+<th>partner</th>
+<th>ranking</th>
+<th>gevraagd</th>
+<th>gepland</th>
+{% for row in incomplete_inschrijvingen %}
+<tr>
+<td>{{ row.categorie }}</td>
+<td>{{ row.naam }}</td>
+<td>{{ row.partner }}</td>
+<td>{{ row.ranking_effectief }}</td>
+<td>{{ row.aantal_gevraagd }}</td>
+<td>{{ row.aantal_gepland }}</td>
+</tr>
+{% endfor %}
+</table>
+<br>
+<a class="newbutton" href="{{ path('home') }}">Sluit</a>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

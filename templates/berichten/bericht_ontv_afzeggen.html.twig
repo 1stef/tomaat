@@ -1,0 +1,21 @@
+{% extends 'berichten/bericht_template.html.twig' %}
+
+{% block aanhef %}
+{{ bericht_verrijkt['van'] }} gaat niet akkoord met de voorgestelde verplaatsing van onderstaande wedstrijd.
+De wedstrijd moet worden afgezegd.
+{% endblock %}
+
+{% block toelichting %}
+{{ parent() }}
+{% endblock %}
+
+{% block afsluiting %}
+<div class = "w3-row">
+<br>
+<br>
+Ga z.s.m. naar de 
+<a href="{{path('wizard_wijzig_wedstrijd_reageer', {'wedstrijd_wijziging_id':bericht_verrijkt['wedstrijd_wijziging_id']})}}" class="mylink">wedstrijd wijziging</a>
+op toernooiopmaat.nl om deze afzegging te bevestigen!
+</div>
+{% endblock %}
+

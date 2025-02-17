@@ -1,0 +1,46 @@
+{# Deze file is bedoeld als include file in een andere twig file die wedstrijden toont
+   In de bovenliggende twig file moet een parameter wedstrijden zijn meegegeven vanuit de controller
+   en de files wedstrijd_filters.js en wedstrijd_filters.css moeten worden included
+ #}
+<div><b>Filters</b></div>
+<div class = "mycontainer">
+<span class ="w3-col s1"><b>Categorie</b></span>
+<span class="w3-col s1">
+<input type="radio" id="alle_categorieen" name="cat_filter" value="alle" onclick = "catFilter()">
+<label for="alle_categorieen">alle</label>
+</span>
+{% for category in categorieen %}
+<span class="w3-col s1">
+<input type="radio" id="{{ category.getCat() }}" name="cat_filter" value="{{ category.getCat() }}" onclick = "catFilter()">
+<label for="{{ category.getCat() }}">{{ category.getCat() }}</label>
+</span>
+{% endfor %}
+<br>
+<div class="w3-row">
+<span class ="w3-col s1"><b>Dag</b></span>
+<span class="w3-col s1">
+<input type="radio" id="alle_dagen" name="dag_filter" value="alle" onclick = "dagFilter()">
+<label for="alle_dagen">alle</label>
+</span>
+{% for dag in toernooidagen %}
+<span class="w3-col s1">
+<input type="radio" id="{{dag}}" name="dag_filter" value="{{dag}}" onclick = "dagFilter()">
+<label for="{{dag}}">{{dag}}</label>
+</span>
+{% endfor %}
+</div>
+<div class="w3-row">
+<span class ="w3-col s3"><b>Bondsnummer (0 = alle)</b></span>
+<span class="w3-col s1">
+<input type="number" id="bondsnummer" value=0 onchange = "bondsnrFilter()">
+</span>
+</div>
+<div class="w3-row">
+<span class ="w3-col s3"><b>Naam (leeg  = alle)</b></span>
+<span class ="w3-col s1">
+<input type="text" id="naam" value="" onchange = "naamFilter()">
+</span>
+</div>
+
+</div>
+<br>

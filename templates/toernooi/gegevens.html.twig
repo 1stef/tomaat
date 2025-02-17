@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+{{ parent() }}
+
+<div class="container">
+    {% form_theme gegevensForm 'bootstrap_4_horizontal_layout.html.twig' %}
+    <form class="form-horizontal" method="post">
+     <div class="form-group">
+       <div class="col-sm-7">
+         <h2 style="text-align:center;">Toernooi gegevens</h2>
+       </div>
+     </div>
+      {{ form_widget(gegevensForm.toernooi_id, {'attr':{'style':'display:none'}}) }}
+     <div class="form-group">
+       <label class="control-label col-sm-3" for="naam">Naam toernooi:</label>
+       <div class="col-sm-4">
+         <input type="text" class="form-control" id="naam" value='{{ toernooi.getToernooiNaam() }}' name="toernooi_naam" readonly>
+       </div>
+     </div>
+     <div class="form-group">
+       <label class="control-label col-sm-3" for="banen">Aantal banen:</label>
+       <div class="col-sm-4">
+          {{ form_widget(gegevensForm.aantal_banen) }}
+       </div>
+       <div class="col-sm-4">
+          {{ form_errors(gegevensForm.aantal_banen) }}
+       </div>
+     </div>
+     <div class="form-group">        
+       <label class="control-label col-sm-3" for="subm"></label>
+       <div class="col-sm-4" id="subm">
+         {# <input type="hidden" name="toernooi_gegevens" value="1"> #}
+         <button class="newbutton">Submit</button>
+         <a class="newbutton" href="{{ path('home') }}">Cancel</a>
+        </div>
+     </div>
+      {{ form_rest(gegevensForm) }}
+      {# {{ dump(gegevensForm) }} #}
+    </form>
+    <div class="w3-row"></div>
+    <div class="w3-row">
+      <div class="col-sm-7">
+        <label class="control-label col-sm-5" for="button_cats"></label>
+        {# <button type="button" id="button_cats" class="w3-button w3-blue w3-round-xlarge w3-margin" onclick="bewerkCategorieen()">Bewerk categorieën</button> #}
+        <button type="button" id="button_cats" class="newbutton" onclick="bewerkCategorieen()">Bewerk categorieën</button>
+      </div>
+    </div>
+    <div id="modalPlaceHolder">
+      {# hier moet door javascript bewerkCategorieen() de response van de Ajax call worden toegevoegd/vervangen #}
+    </div>
+    <div class="w3-row"></div>
+    <div class="w3-row">
+      <div class="col-sm-7">
+        <label class="control-label col-sm-5" for="button_speeltijden"></label>
+        {# <button type="button" id="button_speeltijden" class="w3-button w3-blue w3-round-xlarge w3-margin" data-toggle="modal" data-target="#modalSpeeltijden">Bewerk speeltijden</button> #}
+        <button type="button" id="button_speeltijden" class="newbutton" data-toggle="modal" data-target="#modalSpeeltijden">Bewerk speeltijden</button>
+      </div>
+    </div>
+    {{ include ('toernooi/__speeltijden.html.twig', {'speeltijdenForm' : speeltijdenForm}) }}
+
+ </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% if not speeltijdenValid %}
+  <script>$('#modalSpeeltijden').modal('show');</script>
+{% endif %}
+<script src="{{ asset('js/categorieen.js')}}" ></script>
+{% endblock %}

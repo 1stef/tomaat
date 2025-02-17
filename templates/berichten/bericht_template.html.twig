@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<h4>
+{% block pagina_titel %}
+{{ bericht_verrijkt['toernooi_naam']}} wedstrijd wijziging
+{% endblock %}
+</h4>
+<br>
+<h3>
+{% block aanhef %}
+{% endblock %}
+</h3>
+<br>
+{% block wedstrijd %}
+<div class = "w3-row">
+    <h4>
+    <div class = "w3-col s2">Cat</div>
+    <div class = "w3-col s2">Datum</div>
+    <div class = "w3-col s2">Tijd</div>
+    <div class = "w3-col s3">Speler/team 1</div>
+    <div class = "w3-col s3">Speler/team 2</div>
+    </h4>
+</div>
+<br>
+    {% set offset = bericht_verrijkt['dagnummer_oud']-1 %}
+    {% set datum = bericht_verrijkt['eerste_dag']|date_modify("+" ~ offset ~ " day")|date("D d-m")   %}
+    <div >
+    <div class = "w3-col s2">{{ bericht_verrijkt['categorie'] }}</div>
+    <div class = "w3-col s2">{{ datum }}</div>
+    <div class = "w3-col s2">{{ bericht_verrijkt['starttijd_oud'] }}</div>
+    <div class = "w3-col s3">{{ bericht_verrijkt['naam1A'] }}</div>
+    <div class = "w3-col s3">{{ bericht_verrijkt['naam2A'] }}</div>
+    </div>
+    {% if (bericht_verrijkt['cat_type'] == "dubbel") %}
+    <div class = "w3-row">
+    <div class = "w3-col s2">&nbsp</div>
+    <div class = "w3-col s2">&nbsp</div>
+    <div class = "w3-col s2">&nbsp</div>
+    <div class = "w3-col s3">{{ bericht_verrijkt['naam1B'] }}</div>
+    <div class = "w3-col s3">{{ bericht_verrijkt['naam2B'] }}</div>
+    </div>
+    {% endif %}
+{% endblock %}
+{% block toelichting %}
+<div class = "w3-row">
+<br>
+De toelichting van {{ bericht_verrijkt['van'] }}:
+<br><br>
+{{ bericht_verrijkt['tekst'] }}
+</div>
+<br>
+{% endblock %}
+{% block afsluiting %}
+{% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

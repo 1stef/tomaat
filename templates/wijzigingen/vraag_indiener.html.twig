@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}Deelnemer Account{% endblock %} 
+
+{% block content %}
+{{ parent() }}
+<div style="max-width:400px">
+<h3>Geef aan welke speler de wijziging aanvraagt:</h3
+    <div>
+    <input type="radio" id="speler1" name="kies_aanvrager" value="{{ wedstrijd_gegevens['speler1'] }}">
+    <label for="speler1">{{ wedstrijd_gegevens['naam_speler1'] }}</label>
+    </div>
+    {% if wedstrijd_gegevens['cat_type'] == "dubbel" %}
+    <div>
+    <input type="radio" id="partner1" name="kies_aanvrager" value="{{ wedstrijd_gegevens['partner1'] }}">
+    <label for="partner1">{{ wedstrijd_gegevens['naam_partner1'] }}</label>
+    </div>
+    <div>
+    {% endif %}
+    <div>
+    <input type="radio" id="speler2" name="kies_aanvrager" value="{{ wedstrijd_gegevens['speler2'] }}">
+    <label for="speler2">{{ wedstrijd_gegevens['naam_speler2'] }}</label>
+    </div>
+    {% if wedstrijd_gegevens['cat_type'] == "dubbel" %}
+    <div>
+    <input type="radio" id="partner2" name="kies_aanvrager" value="{{ wedstrijd_gegevens['partner2'] }}">
+    <label for="partner2">{{ wedstrijd_gegevens['naam_partner2'] }}</label>
+    </div>
+    {% endif %}
+    <div id="message" class="verberg feedback_message">Kies een speler</div>
+
+    <button class="newbutton"  onclick="maakAfzegging()">Verder</button>
+    <button class="newbutton" onclick="cancel()">Cancel</button>
+</div>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+  var wedstrijd_id = {{ wedstrijd_gegevens['wedstrijd_id'] }};
+
+</script>
+<script src= "{{ asset('js/afzeggen.js')}}" ></script>
+{% endblock %}

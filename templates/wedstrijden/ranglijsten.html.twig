@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<h2>Standen per categorie</h2>
+<p><br></p>
+<div>
+    {% if ranglijsten is empty %}
+        <h3>Nog geen uitslagen</h3>
+    {% else %}
+        {% set rangnr = 1 %}
+        {% set firstrow = ranglijsten|first  %}
+        {% set lastcat = firstrow.cat %}
+        <h4>Categorie: {{ firstrow.cat }}</h4>
+        <table style="width:100%">
+        <th width="5%">nr</th>
+        <th width="25%">naam</th>
+        <th width="25%">partner</th>
+        <th width="10%">ranking</th>
+        <th width="15%">wedstrijden</th>
+        <th width="10%">sets</th>
+        <th width="10%">games</th>
+        {% for row in ranglijsten %}
+            {% if (row.cat == lastcat) %}
+                <tr>
+                <td>{{rangnr}}</td>
+                <td>{{row.naam}}</td>
+                <td>{{row.partner}}</td>
+                <td>{{row.ranking}}</td>
+                <td>{% if row.netto_partijen>0 %}+{% endif %}{{row.netto_partijen}}</td>
+                <td>{% if row.netto_sets>0 %}+{% endif %}{{row.netto_sets}}</td>
+                <td>{% if row.netto_games>0 %}+{% endif %}{{row.netto_games}}</td>
+                </tr>
+                {% set rangnr = rangnr + 1 %}
+            {% else %}
+                {% set lastcat = row.cat %}
+                {% set rangnr = 1 %}
+                </table>
+                <br>
+                <h4>Categorie: {{ row.cat }}</h4>
+                <table style="width:100%">
+                <th width="5%">nr</th>
+                <th width="25%">naam</th>
+                <th width="25%">partner</th>
+                <th width="10%">ranking</th>
+                <th width="15%">wedstrijden</th>
+                <th width="10%">sets</th>
+                <th width="10%">games</th>
+                <tr>
+                <td>{{rangnr}}</td>
+                <td>{{row.naam}}</td>
+                <td>{{row.partner}}</td>
+                <td>{{row.ranking}}</td>
+                <td>{% if row.netto_partijen>0 %}+{% endif %}{{row.netto_partijen}}</td>
+                <td>{% if row.netto_sets>0 %}+{% endif %}{{row.netto_sets}}</td>
+                <td>{% if row.netto_games>0 %}+{% endif %}{{row.netto_games}}</td>
+                </tr>
+                {% set rangnr = rangnr + 1 %}
+            {% endif %}
+        {% endfor %}
+        </table>
+        <br>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

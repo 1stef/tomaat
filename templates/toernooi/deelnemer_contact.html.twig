@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="container">
+<h3>Contactgegevens voor de deelnemers aan: "<i>{{ toernooi_naam }}</i>"</h3>
+(Alleen voor gebruik door toernooi administrators van dit toernooi)
+<br>
+<br>
+<table>
+<th>naam</th>
+<th>email</th>
+<th>telefoon</th>
+<th>bondsnummer</th>
+{% for row in contact_gegevens %}
+<tr>
+<td>{{ row.naam }}</td>
+<td>{{ row.email }}</td>
+<td>{{ row.telefoonnummer }}</td>
+<td>{{ row.bondsnummer }}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

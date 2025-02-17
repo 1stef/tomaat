@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Overzicht Inschrijvingen{% endblock %}
+
+{% block content %}
+{{ parent() }}
+    <h3>Overzicht inschrijvingen per categorie</h3>
+
+    <div class="w2-container" id="presentation-area">
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+  var inschrijvingen_per_cat = {{ inschrijvingen_per_cat|raw }};
+</script>
+<script src="{{ asset('js/stat_inschrijvingen.js')}}"></script>
+{% endblock %}

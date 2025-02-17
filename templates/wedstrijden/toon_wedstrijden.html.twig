@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toon Wedstrijden{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/wedstrijd_filters.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<h3>Wedstrijden</h3>
+{{ include ('wedstrijden/__wedstrijd_filters.html.twig') }}
+
+<div class="w2-container" id="presentation-area">
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% if wedstrijden is defined %}
+<script>
+  var toon = true;
+  var wedstrijden = {{ wedstrijden|raw }};  // twig doet de json_decode al
+</script>
+{% else %}
+<script>
+  var toon = false;
+</script>
+{% endif %}
+<script src="{{ asset('js/wedstrijd_filters.js')}}"></script>
+<script src="{{ asset('js/toon_wedstrijden.js')}}"></script>
+{% endblock %}

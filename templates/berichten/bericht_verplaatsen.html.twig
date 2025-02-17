@@ -1,0 +1,20 @@
+{% extends 'berichten/bericht_template.html.twig' %}
+
+{% block aanhef %}
+{{ bericht_verrijkt['van'] }} heeft aangegeven dat onderstaande wedstrijd moet worden verplaatst:
+{% endblock %}
+
+{% block toelichting %}
+{{ parent() }}
+{% endblock %}
+
+{% block afsluiting %}
+{% set offset = bericht_verrijkt['dagnummer_nieuw']-1 %}
+{% set datum = bericht_verrijkt['eerste_dag']|date_modify("+" ~ offset ~ " day")|date("D d-m")   %}
+De wedstrijd kan verplaatst worden naar: {{ datum }} &nbsp {{ bericht_verrijkt['starttijd_nieuw'] }}
+<br><br>
+Ga z.s.m. naar de 
+<a href="{{path('wizard_wijzig_wedstrijd_reageer', {'wedstrijd_wijziging_id':bericht_verrijkt['wedstrijd_wijziging_id']})}}" class="mylink">wedstrijd wijziging</a>
+op toernooiopmaat.nl om deze verplaatsing te bevestigen of te veranderen!
+{% endblock %}
+

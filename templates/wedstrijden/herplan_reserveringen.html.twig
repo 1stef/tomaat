@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="container">
+<h2>Tijdslot reserveringen voor toevoegen of verplaatsen wedstrijd</h2>
+<table>
+<th>Categorie</th>
+<th>Van(dag)</th>
+<th>Van(tijd)</th>
+<th>Naar(dag)</th>
+<th>Naar(tijd)</th>
+<th>Speler 1</th>
+<th>Partner 1</th>
+<th>Speler 2</th>
+<th>Partner 2</th>
+<tr>
+{% for reservering in herplan_reserveringen %}
+{% set deelnemers = herplan_deelnemers|filter(rij => rij.reservering_id == reservering['reservering_id'])|merge([]) %}
+<td>{{ deelnemers[0]['categorie'] }}</td>
+<td>{{ reservering['dagnummer_oud'] }}</td>
+<td>{{ reservering['starttijd_oud'] }}</td>
+<td>{{ reservering['dagnummer_nieuw'] }}</td>
+<td>{{ reservering['starttijd_nieuw'] }}</td>
+{% if deelnemers[0]['cat_type'] == "dubbel" %}
+<td class='hover' onclick="toggleBevestigd(this)">
+<input type='checkbox' id='speler1' data-reservering={{ reservering['reservering_id'] }} {% if reservering['speler_1_bevestigd'] %} checked {% endif %}> {{ deelnemers[0]['naam'] }}
+<div class='tooltip'>{% if reservering['speler_1_bevestigd'] %}Bevestigd{% else %}Niet bevestigd{% endif %}</div>
+</td>
+<td class='hover' onclick="toggleBevestigd(this)">
+<input type='checkbox' id='partner1' data-reservering={{ reservering['reservering_id'] }} {% if reservering['partner_1_bevestigd'] %} checked {% endif %}> {{ deelnemers[1]['naam'] }}
+<div class='tooltip'>{% if reservering['partner_1_bevestigd'] %}Bevestigd{% else %}Niet bevestigd{% endif %}</div>
+</td>
+<td class='hover' onclick="toggleBevestigd(this)">
+<input type='checkbox' id='speler2' data-reservering={{ reservering['reservering_id'] }} {% if reservering['speler_2_bevestigd'] %} checked {% endif %}> {{ deelnemers[2]['naam'] }}
+<div class='tooltip'>{% if reservering['speler_2_bevestigd'] %}Bevestigd{% else %}Niet bevestigd{% endif %}</div>
+</td>
+<td class='hover' onclick="toggleBevestigd(this)">
+<input type='checkbox' id='partner2' data-reservering={{ reservering['reservering_id'] }} {% if reservering['partner_2_bevestigd'] %} checked {% endif %}> {{ deelnemers[3]['naam'] }}
+<div class='tooltip'>{% if reservering['partner_2_bevestigd'] %}Bevestigd{% else %}Niet bevestigd{% endif %}</div>
+</td>
+{% else %}
+<td class='hover' onclick="toggleBevestigd(this)">
+<input type='checkbox' id='speler1' data-reservering={{ reservering['reservering_id'] }} {% if reservering['speler_1_bevestigd'] %} checked {% endif %}> {{ deelnemers[0]['naam'] }}
+<div class='tooltip'>{% if reservering['speler_1_bevestigd'] %}Bevestigd{% else %}Niet bevestigd{% endif %}</div>
+</td>
+<td>-</td>
+<td class='hover' onclick="toggleBevestigd(this)">
+<input type='checkbox' id='speler2' data-reservering={{ reservering['reservering_id'] }} {% if reservering['speler_2_bevestigd'] %} checked {% endif %}> {{ deelnemers[1]['naam'] }}
+<div class='tooltip'>{% if reservering['speler_2_bevestigd'] %}Bevestigd{% else %}Niet bevestigd{% endif %}</div>
+</td></td>
+<td>-</td>
+{% endif %}
+<td><button class="newbutton" onclick="verplaatsDefinitief({{reservering['reservering_id']}})">Verplaats</button></td>
+<td><button class="newbutton" onclick="anderTijdstip({{reservering['reservering_id']}})">Ander tijdstip</button></td>
+<td><button class="newbutton" onclick="verwijderReservering({{reservering['reservering_id']}})">Verwijder</button></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+{% if deelnemers[0]['cat_type'] == "dubbel" %}
+<td>{{ deelnemers[0]['email'] }}</td>
+<td>{{ deelnemers[1]['email'] }}</td>
+<td>{{ deelnemers[2]['email'] }}</td>
+<td>{{ deelnemers[3]['email'] }}</td>
+{% else %}
+<td>{{ deelnemers[0]['email'] }}</td>
+<td></td>
+<td>{{ deelnemers[1]['email'] }}</td>
+<td></td>
+{% endif %}
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+{% if deelnemers[0]['cat_type'] == "dubbel" %}
+<td>{{ deelnemers[0]['telefoonnummer'] }}</td>
+<td>{{ deelnemers[1]['telefoonnummer'] }}</td>
+<td>{{ deelnemers[2]['telefoonnummer'] }}</td>
+<td>{{ deelnemers[3]['telefoonnummer'] }}</td>
+{% else %}
+<td>{{ deelnemers[0]['telefoonnummer'] }}</td>
+<td></td>
+<td>{{ deelnemers[1]['telefoonnummer'] }}</td>
+<td></td>
+{% endif %}
+</tr>
+{% endfor %}
+</tr>
+</table>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src= "{{ asset('js/reservering.js')}}" ></script>
+{% endblock %}

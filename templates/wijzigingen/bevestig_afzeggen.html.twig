@@ -1,0 +1,22 @@
+{% extends 'wijzigingen/wijzigingen_template.html.twig' %}
+
+{% block pagina_titel %}
+    {{parent()}}, stap 3
+{% endblock %}
+
+{% block aanhef %}
+U wilt de volgende wedstrijd afzeggen:
+{% endblock %}
+
+{% block afsluiting %}
+    Weet u zeker dat u deze wedstrijd wilt afzeggen?
+{% endblock %}
+
+{% block buttons %}
+<a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'afzeggen'}) }}">Afzeggen</a>
+<a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'niet afzeggen'}) }}">Niet afzeggen</a>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

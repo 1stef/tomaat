@@ -1,0 +1,58 @@
+#th, td {
+border-style: groove;
+}
+
+.scrollx {
+  overflow-x: scroll;
+  max-height: 600px;
+}
+
+table {
+  table-layout: fixed;
+}
+
+td {
+  background-color: lightgrey;
+}
+
+td.vrij {
+  background-color: green;
+  border-top: 3px solid white;
+  border-bottom: 3px solid white;
+}
+
+td.vrij_met_ingepland {
+  background-color: black;
+}
+
+td.vrij_met_verhinderd {
+  background-color: brown;
+}
+td.start_wedstrijd {
+  border-left: 3px solid white;
+}
+
+td.einde_wedstrijd {
+  border-right: 3px solid white;
+}
+td.ingepland {
+background-color: red;
+}
+
+td.verhinderd {
+  background-color: orange;
+}
+
+.maxh {
+  white-space: nowrap;
+}
+
+.vertical {
+  transform: translate(-9pt, -8pt) rotate(90deg);
+  max-width: 6pt;
+  min-height: 35pt;
+}
+
+.verberg {
+  display: none;
+}

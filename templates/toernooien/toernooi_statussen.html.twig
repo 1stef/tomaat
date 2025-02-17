@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toernooi statussen{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div>
+    <h2>Bewerk toernooi status:</h2>
+    <div class="w3-row">
+      <label class="w3-col s2">Toon toernooien met status: </label>
+      <select class="w3-col s2" id="selStatus" onclick="selectToernooienMetStatus(this.value)">
+        <option value="aangevraagd" {% if status == "aangevraagd" %} selected="selected" {% endif %}>aangevraagd</option>
+        <option value="wacht op betaling" {% if status == "wacht op betaling" %} selected="selected" {% endif %}>wacht op betaling</option>
+        <option value="voorbereiden inschrijving" {% if status == "voorbereiden inschrijving" %} selected="selected" {% endif %}>voorbereiden inschrijving</option>
+        <option value="alle" {% if status == "alle" %} selected="selected" {% endif %}>alle</option>
+      </select>
+    </div>
+    <br><br>
+    {% if toernooien is empty %}
+      {# <div class="feedback_message">{{ message }}</div> #}
+    {% else %}
+      {% for toernooi in toernooien %}          
+        <article>
+          <div class="w3-row">
+            <label class="w3-col s2">Naam toernooi: </label>
+            <button class="w3-col s2" value="{{ toernooi.getToernooiNaam() }}" data-toernooi-id ="{{ toernooi.getId() }}"
+              onclick="toonAanvraag(this);">{{ toernooi.getToernooiNaam() }} </button>
+          </div>
+          <div class="w3-row">
+            <label class="w3-col s2">Wijzig status: </label>
+            <select class="w3-col s2" data-toernooi-id ="{{ toernooi.getId() }}" onchange="setToernooiStatus(this)">
+              <option value="aangevraagd" {% if toernooi.getToernooiStatus() == "aangevraagd" %} selected="selected" {% endif %}>aangevraagd</option>
+              <option value="wacht op betaling" {% if toernooi.getToernooiStatus() == "wacht op betaling" %} selected="selected" {% endif %}>wacht op betaling</option>
+              <option value="voorbereiden inschrijving" {% if toernooi.getToernooiStatus() == "voorbereiden inschrijving" %} selected="selected" {% endif %}>voorbereiden inschrijving</option>
+            </select>
+          </div>
+          <div class="w3-row">
+              <input type="checkbox" id="cb_toernooi_{{ toernooi.getId() }}" data-toernooi-id ="{{ toernooi.getId() }}" onchange="setBlokkeerMails(this)" value={{ toernooi.getBlokkeerMails}}>
+              <label for="cb_toernooi_{{ toernooi.getId() }}">Blokkeer mails</label>
+          </div>
+        </article>
+        <p></p>
+      {% endfor %}
+      <div id="modalPlaceHolder">
+        {# hier moet door javascript toonAanvraag() de response van de Ajax call worden toegevoegd/vervangen #}
+      </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/toernooi_statussen.js')}}" ></script>
+{% endblock %}
+
+

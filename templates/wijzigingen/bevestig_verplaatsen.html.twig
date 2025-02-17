@@ -1,0 +1,37 @@
+{% extends 'wijzigingen/wijzigingen_template.html.twig' %}
+
+{% block pagina_titel %}
+    {{parent()}}, stap 3
+{% endblock %}
+
+{% block aanhef %}
+U wilt de volgende wedstrijd verplaatsen:
+{% endblock %}
+
+{% block afsluiting %}
+    {% set eerste_dag = date(toernooi.getEersteDag()) %}
+    {% set offset = herplan_gegevens.getDagnummer() - 1 %}
+    {% set datum = eerste_dag|date_modify("+" ~ offset ~ " day")|date("D d-m")   %}
+
+    De wedstrijd kan verplaatst worden naar: {{ datum}}  {{ herplan_gegevens.getStarttijd() }}.
+    <br>
+    {% if naam_met_wedstrijd is defined %}
+        {% if naam_met_wedstrijd is not null %}
+        Dan moet {{ naam_met_wedstrijd }} wel akkoord gaan om die dag meer dan één wedstrijd te spelen.
+        <br>
+        {% endif %}
+    {% endif %}
+    Bent u akkoord met dit nieuwe tijdstip?
+{% endblock %}
+
+{% block buttons %}
+<a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'verplaatsen'}) }}">Akkoord</a>
+<a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'ander tijdstip'}) }}">Ander tijdstip</a>
+{% if indiener_veranderd == false %}
+<a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'niet verplaatsen'}) }}">Niet verplaatsen</a>
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

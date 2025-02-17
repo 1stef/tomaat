@@ -1,0 +1,16 @@
+{% extends 'berichten/bericht_template.html.twig' %}
+
+{% block aanhef %}
+{% set offset = bericht_verrijkt['dagnummer_nieuw']-1 %}
+{% set datum = bericht_verrijkt['eerste_dag']|date_modify("+" ~ offset ~ " day")|date("D d-m")   %}
+
+{{ bericht_verrijkt['van'] }} is akkoord met de voorgestelde extra wedstrijd
+op {{ datum }}, {{bericht_verrijkt['starttijd_nieuw']}}.
+{% endblock %}
+
+{% block toelichting %}
+{% endblock %}
+
+{% block afsluiting %}
+{% endblock %}
+

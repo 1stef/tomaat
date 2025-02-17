@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+{% endblock %}
+
+{% block title %}Wijzig verhinderingen{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div>
+  <div class="mycontainer-no-border narrow60">
+    <h2 style="text-align:center">Verhinderingen</h2>
+  </div>
+   {{ include ('inschrijving/__verhinderingen.html.twig', {'verhinderingen' : verhinderingen, 'toernooi' : toernooi, 'speeltijden': speeltijden, 'wedstrijd_wijziging_id':wedstrijd_wijziging_id}) }}
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script src="{{ asset('js/verhinderingen.js') }}"></script>
+{% endblock %}

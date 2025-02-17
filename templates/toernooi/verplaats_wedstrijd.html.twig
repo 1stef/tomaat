@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+<link href = "{{ asset('css/verplaats.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<h3>Verplaats wedstrijd</h3>
+<div class="form-group w3-row">
+<label class="control-label col-sm-2" for="categorie">Categorie:</label>
+<div class="col-sm-3 control-label" id='categorie'>{{ wedstrijd_gegevens['categorie'] }}          
+</div>
+</div>
+<div class="form-group w3-row">
+<table class=col-sm-10>
+<tr><th></th><th>Team 1</th><th>Team 2</th></tr>
+<tr><td>speler</td><td>{{ wedstrijd_gegevens['naam_speler1'] }}</td><td>{{ wedstrijd_gegevens['naam_speler2'] }}<td></tr>
+<tr><td>partner</td><td>{{ wedstrijd_gegevens['naam_partner1'] }}</td><td>{{ wedstrijd_gegevens['naam_partner2'] }}<td></tr>
+</table>
+<div id="modalVerplaats" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="accountTitle">Geef aan welke speler de wijziging aanvraagt:</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove">X</span></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                <input type="radio" id="speler1" name="kies_aanvrager" value="{{ wedstrijd_gegevens['speler1'] }}">
+                <label for="speler1">{{ wedstrijd_gegevens['naam_speler1'] }}</label>
+                </div>
+                {% if wedstrijd_gegevens['cat_type'] == "dubbel" %}
+                <div>
+                <input type="radio" id="partner1" name="kies_aanvrager" value="{{ wedstrijd_gegevens['partner1'] }}">
+                <label for="partner1">{{ wedstrijd_gegevens['naam_partner1'] }}</label>
+                </div>
+                <div>
+                {% endif %}
+                <div>
+                <input type="radio" id="speler2" name="kies_aanvrager" value="{{ wedstrijd_gegevens['speler2'] }}">
+                <label for="speler2">{{ wedstrijd_gegevens['naam_speler2'] }}</label>
+                </div>
+                {% if wedstrijd_gegevens['cat_type'] == "dubbel" %}
+                <div>
+                <input type="radio" id="partner2" name="kies_aanvrager" value="{{ wedstrijd_gegevens['partner2'] }}">
+                <label for="partner2">{{ wedstrijd_gegevens['naam_partner2'] }}</label>
+                </div>
+                {% endif %}
+                <div id="message" class="verberg feedback_message">Kies een speler</div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="newbutton"  onclick="maakWijziging()">Verder</button>
+                <button type="button" class="newbutton" data-dismiss="modal">Sluit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div id="vrije_tijdsloten">
+</div>
+
+<div id="geplande_wedstrijden">
+</div>
+
+<div id="verhinderingen">
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+  var wedstrijd_gegevens_json = {{ wedstrijd_gegevens_json|raw }};
+  var speeltijden = {{ speeltijden|raw }};
+  var vrije_tijdsloten = {{ vrije_tijdsloten|raw }};
+  var geplande_wedstrijden = {{ geplande_wedstrijden|raw }};
+  var verhinderingen = {{ verhinderingen|raw }};
+</script>
+<script src= "{{ asset('js/verplaats.js')}}" ></script>
+{% endblock %}

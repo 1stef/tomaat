@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Geplande wedstrijd wijzigen{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<h4>
+{% block pagina_titel %}
+    Geplande wedstrijd wijzigen
+{% endblock %}
+</h4>
+<br>
+<h3>
+{% block aanhef %}
+{% endblock %}
+</h3>
+<br>
+{% block wedstrijd %}
+    {% set eerste_dag = date(toernooi.getEersteDag()) %}
+    <div class = "w3-row">
+      <h4>
+      <div class = "w3-col s2">Cat</div>
+      <div class = "w3-col s2">Datum</div>
+      <div class = "w3-col s2">Tijd</div>
+      <div class = "w3-col s3">Speler/team 1</div>
+      <div class = "w3-col s3">Speler/team 2</div>
+      </h4>
+    </div>
+    <br>
+      {# set offset = tijdslot_gegevens.dagnummer-1 #}
+      {% set offset = tijdslot.getDagNummer() - 1 %}
+      {% set datum = eerste_dag|date_modify("+" ~ offset ~ " day")|date("D d-m")   %}
+      <div class = "w3-row w3-bar-item">
+        {% set team1_class = "font-weight-normal" %}
+        {% set team2_class = "font-weight-normal" %}
+        <div class = "w3-col s2">{{ wedstrijd_gegevens.categorie }}</div>
+        <div class = "w3-col s2">{{ datum }}</div>
+        {# <div class = "w3-col s2">{{ tijdslot_gegevens.starttijd }}</div> #}
+        <div class = "w3-col s2">{{ tijdslot.getStarttijd() }}</div>
+        <div class = "w3-col s3 {{ team1_class }}">{{ wedstrijd_gegevens.naam_speler1 }}</div>
+        <div class = "w3-col s3 {{ team2_class }}">{{ wedstrijd_gegevens.naam_speler2 }}</div>
+      </div>
+      {% if (wedstrijd_gegevens.cat_type == "dubbel") %}
+      <div class = "w3-row">
+        <div class = "w3-col s2">&nbsp</div>
+        <div class = "w3-col s2">&nbsp</div>
+        <div class = "w3-col s2">&nbsp</div>
+        <div class = "w3-col s3 {{ team1_class }}">{{ wedstrijd_gegevens.naam_partner1 }}</div>
+        <div class = "w3-col s3 {{ team2_class }}">{{ wedstrijd_gegevens.naam_partner2 }}</div>
+      </div>
+      {% endif %}
+      <br>
+    <div>
+{% endblock %}
+</h3>
+<h4>
+{% block afsluiting %}
+{% endblock %}
+</h4>
+<br>
+<div>
+{% block buttons %}
+{% endblock %}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

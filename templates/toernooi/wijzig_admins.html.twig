@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wijzig toernooi administrators{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<h2>Voeg toernooi admins toe of wijzig toernooi admins</h2>
+<h3>Toernooi naam: <b>{{ toernooi.getToernooiNaam() }}</b></h3>
+<div class="w3-row">
+<p class="max-75 w3-col s8">
+Voeg hier toernooi administrators toe voor uw aangevraagde toernooi.
+Toernooi administrators kunnen voor dit toernooi categorieën en planningsgegevens invoeren,
+de inschrijving openzetten en afsluiten,
+wedstrijden plannen, wedstrijdresultaten invoeren, etc.
+U geeft hier alleen de email adressen op van de beoogde toernooi administrators; zodra zij met dat
+email adres een account hebben aangemaakt, kunnen zij bovengenoemde taken uitvoeren. 
+U kunt hier ook toernooi administrators verwijderen.
+Als aanvrager van het toernooi bent u zelf ook toernooi administrator.
+</p>
+</div>
+<div class-"w3-row">
+<div id="admin_list" class="w3-col s8 mycontainer">
+{% for admin in toernooi_admins %}
+<div class="w3-row">
+<div class="w3-col s7 w3-border w3-border-blue w3-margin"><b>{{ admin.getAdminEmail() }}</b></div>
+<button class="newbutton" title="Verwijder" data-admin = "{{ admin.getAdminEmail() }}" onclick = "deleteAdmin(this);"><b>Verwijder</b></button>
+</div>
+{% endfor %}
+</div>
+</div>
+<div class="w3-row">
+<div class="w3-col s8">
+<input type="email" class="w3-col w3-margin w3-border-blue s7" id="nieuwe_admin" placeholder="email adres">
+<button class="newbutton" onclick = "addAdmin();" placeholder="email adres">Voeg toe</button>
+<div id="error_message" class="feedback_message w3-row"></div>
+<div>
+    <a class="newbutton" href="{{ path('home') }}">Sluit</a>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+var toernooi_id = {{ toernooi.getId() }};
+</script>
+<script src="{{ asset('js/wijzig_admins.js')}}" ></script>
+{% endblock %}
+
+

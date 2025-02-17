@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %} 
+
+{% block title %}Deelnemer Account{% endblock %} 
+
+{% block content %}
+{{ parent() }}
+<h2>Account gegevens</h2>
+{% form_theme accountForm 'bootstrap_4_horizontal_layout.html.twig' %}
+<div style="max-width:800px">
+{{ form_start(accountForm) }}
+{{ form_widget(accountForm.user_id, {'attr':{'style':'display:none'}}) }}
+{{ form_row(accountForm.naam) }}
+{{ form_row(accountForm.bondsnummer) }}
+{{ form_row(accountForm.geb_datum) }}
+{{ form_row(accountForm.ranking_enkel) }}
+{{ form_row(accountForm.ranking_dubbel) }}
+{{ form_row(accountForm.telefoonnummer) }}
+<div class="form-group">        
+<div class="col-sm-offset-2 col-sm-10">
+    <input type="hidden" name="account_gegevens" value="1">
+    <button class="newbutton">Opslaan</button>
+    <a class="newbutton" href="{{ path('home') }}">Cancel</a>
+</div>
+</div>
+
+{{ form_end(accountForm) }}
+</div>
+{% endblock %}

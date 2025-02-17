@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Verhindering{% endblock %}
+
+{% block content %}
+{{ parent() }}
+
+<div class="mycontainer-no-border narrow60">
+    <h2>Bewerk verhindering</h2>
+    {% form_theme verhinderingForm 'bootstrap_4_horizontal_layout.html.twig' %}
+    {{ form_start(verhinderingForm) }}
+            {{ form_widget(verhinderingForm.id, {'attr':{'style':'display:none'}}) }}
+            {{ form_widget(verhinderingForm.toernooi_id, {'attr':{'style':'display:none'}}) }}
+            {{ form_widget(verhinderingForm.celnummer, {'attr':{'style':'display:none'}}) }}
+            {{ form_widget(verhinderingForm.bondsnr, {'attr':{'style':'display:none'}}) }}
+            <fieldset>
+                <div class="form-group w3-row">
+                    <div>          
+                        {{ form_widget(verhinderingForm.dagnummer, {'attr': {'class': 'narrow30'}}) }}
+                    </div>
+                </div>
+                <div class="form-group w3-row">
+                    <label class="control-label col-sm-2" for="begintijd">Van:</label>
+                    <div class="col-sm-8">
+                        {{ form_widget(verhinderingForm.begintijd) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(verhinderingForm.begintijd) }}
+                    </div>
+                    <label class="control-label col-sm-2" for="eindtijd">Tot:</label>
+                    <div class="col-sm-8">          
+                        {{ form_widget(verhinderingForm.eindtijd) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(verhinderingForm.eindtijd) }}
+                    </div>
+                </div>
+                <div class="form-group w3-row">
+                    <div class="col-sm-8">          
+                        {{ form_widget(verhinderingForm.hele_dag) }}
+                    </div>
+                </div>
+                <div class="form-group w3-row">
+                    <div class="col-sm-8">          
+                        {{ form_errors(verhinderingForm) }}
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-group">        
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="hidden" name="verhindering" value="1">
+                <button class="newbutton">Opslaan</button>
+                <a class="newbutton" href="{{ path('schrijfIn') }}">Cancel</a>
+            </div>
+            </div>
+    {# {{ dump(verhinderingForm) }} #}
+    {{ form_end(verhinderingForm) }}
+</div>
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    var speeltijden = {{ speeltijden|raw }}
+</script>
+<script src="{{ asset('js/verhindering.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Geplande wedstrijd wijzigen, stap 3{% endblock %}
+
+{% block content %}
+{{ parent() }}
+    <h4>Geplande wedstrijd wijzigen, stap 1</h4>
+    <br>
+    <h3>{{ indiener }} wil de volgende wedstrijd verplaatsen:</h3>
+
+    {% set eerste_dag = date(toernooi.getEersteDag()) %}
+    <div class = "w3-row">
+      <h4>
+      <div class = "w3-col s2">Cat</div>
+      <div class = "w3-col s2">Datum</div>
+      <div class = "w3-col s2">Tijd</div>
+      <div class = "w3-col s3">Speler/team 1</div>
+      <div class = "w3-col s3">Speler/team 2</div>
+      </h4>
+    </div>
+    <br>
+      {% set offset = tijdslot.getDagnummer() - 1 %}
+      {% set datum = eerste_dag|date_modify("+" ~ offset ~ " day")|date("D d-m")   %}
+      <div class = "w3-row w3-bar-item w3-hover-blue" id="div{{wedstrijd_gegevens.wedstrijd_id}}" onclick='selecteer_wedstrijd({{wedstrijd_gegevens.wedstrijd_id}})'>
+        {% set team1_class = "font-weight-normal" %}
+        {% set team2_class = "font-weight-normal" %}
+        <div class = "w3-col s2">{{ wedstrijd_gegevens.categorie }}</div>
+        <div class = "w3-col s2">{{ datum }}</div>
+        <div class = "w3-col s2">{{ tijdslot.getStarttijd() }}</div>
+        <div class = "w3-col s3 {{ team1_class }}">{{ wedstrijd_gegevens.naam_speler1 }}</div>
+        <div class = "w3-col s3 {{ team2_class }}">{{ wedstrijd_gegevens.naam_speler2 }}</div>
+      </div>
+      {% if (wedstrijd_gegevens.cat_type == "dubbel") %}
+      <div class = "w3-row">
+        <div class = "w3-col s2">&nbsp</div>
+        <div class = "w3-col s2">&nbsp</div>
+        <div class = "w3-col s2">&nbsp</div>
+        <div class = "w3-col s3 {{ team1_class }}">{{ wedstrijd_gegevens.naam_partner1 }}</div>
+        <div class = "w3-col s3 {{ team2_class }}">{{ wedstrijd_gegevens.naam_partner2 }}</div>
+      </div>
+      {% endif %}
+      <br>
+      {% set offset = herplan_gegevens.dagnummer-1 %}
+      {% set datum = eerste_dag|date_modify("+" ~ offset ~ " day")|date("D d-m")   %}
+      <h3>
+        De wedstrijd kan verplaatst worden naar: {{ datum}}  {{ herplan_gegevens.starttijd }}.
+        <br>
+        {% if user_id_met_wedstrijd is defined %}
+          {% if user_id_met_wedstrijd == app.user.id %}
+            U speelt die dag dan wel meer dan één wedstrijd.
+            <br>
+          {% endif %}
+        {% endif %}
+        Bent u akkoord met dit nieuwe tijdstip?
+        <br>
+      </h3>
+    <div>
+        <a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3_ontvanger', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'akkoord'}) }}">Akkoord</a>
+        <a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3_ontvanger', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'ander tijdstip'}) }}">Ander tijdstip</a>
+        <a class="newbutton" href="{{ path('wizard_wijzig_wedstrijd_3_ontvanger', {'wedstrijd_wijziging_id':wedstrijd_wijziging_id, 'actie':'afzeggen'}) }}">Afzeggen</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

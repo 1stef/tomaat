@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+{{ parent() }}
+
+<div class="container narrowform">
+{% form_theme wedstrijdUitslagForm 'bootstrap_4_horizontal_layout.html.twig' %}
+    <form class="form-horizontal" method="post">
+     <div class="form-group">
+       <div class="col-sm-7">
+         <h2 style="text-align:center;">Voer wedstrijd uitslag in</h2>
+       </div>
+     </div>
+     <div class="w3-row">
+       <div class="w3-col s4">Baan nummer:</div>
+       <div class="w3-col s4">
+          {{ form_widget(wedstrijdUitslagForm.baan) }}
+       </div>
+     </div>
+     <div class="w3-row">
+       <div class="w3-col s4">Categorie:</div>
+       <div class="w3-col s4">{{ categorie }}</div>
+      </div>
+      <div class="w3-row s4">
+       <div class="w3-col s4">Datum:</div>
+       <div class="w3-col s4">{{ datum | format_date(pattern: 'EEEE d MMM Y') }}</div>
+      </div>
+     </div>
+     <div class="w3-row">
+        {{ form_errors(wedstrijdUitslagForm) }}
+     </div>
+     <div class="form-group w3-row">
+     <table class=col-sm-10>
+     <tr><th></th><th>Team 1</th><th>Team 2</th></tr>
+     <tr><td>speler</td><td>{{ team1_speler1 }}</td><td>{{ team2_speler1 }}<td></tr>
+     <tr><td>partner</td><td>{{ team1_speler2 }}</td><td>{{ team2_speler2 }}<td></tr>
+     <tr><td>set 1</td><td>{{ form_widget(wedstrijdUitslagForm.set1_team1) }}</td><td>{{ form_widget(wedstrijdUitslagForm.set1_team2) }}<td></tr>
+     <tr><td>set 2</td><td>{{ form_widget(wedstrijdUitslagForm.set2_team1) }}</td><td>{{ form_widget(wedstrijdUitslagForm.set2_team2) }}<td></tr>
+     <tr><td>set 3</td><td>{{ form_widget(wedstrijdUitslagForm.set3_team1) }}</td><td>{{ form_widget(wedstrijdUitslagForm.set3_team2) }}<td></tr>
+     </table>
+     </div>
+
+     <div class="form-group w3-row">
+       <label class="control-label col-sm-3" for="winnaar">Winnaar:</label>
+       <div class="col-sm-3">
+          {{ form_widget(wedstrijdUitslagForm.winnaar) }}
+       </div>
+       <div class="col-sm-3 w3-row">
+          {{ form_errors(wedstrijdUitslagForm.winnaar) }}
+       </div>
+     </div>
+     <div class="form-group w3-row">
+       <label class="control-label col-sm-3" for="opgave">Opgave:</label>
+       <div class="col-sm-3">
+          {{ form_widget(wedstrijdUitslagForm.opgave) }}
+       </div>
+       <div class="col-sm-3">
+          {{ form_errors(wedstrijdUitslagForm.opgave) }}
+       </div>
+     </div>
+     <div class="form-group w3-row">
+       <label class="control-label col-sm-3" for="wedstrijd_status">Status:</label>
+       <div class="col-sm-3">
+          {{ form_widget(wedstrijdUitslagForm.wedstrijd_status) }}
+       </div>
+       <div class="col-sm-3">
+          {{ form_errors(wedstrijdUitslagForm.wedstrijd_status) }}
+       </div>
+     </div>
+
+     <div class="form-group">        
+       <div class="col-sm-offset-3 col-sm-9">
+         <input type="hidden" name="start_wedstrijd" value="1">
+         <button class="newbutton">Submit</button>
+         <a class="newbutton" href="{{ path('dashboard') }}">Cancel</a>
+       </div>
+     </div>
+     {{ form_rest(wedstrijdUitslagForm) }}
+     {{ form_end(wedstrijdUitslagForm) }}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

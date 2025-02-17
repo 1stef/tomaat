@@ -1,0 +1,19 @@
+{% extends 'berichten/bericht_template.html.twig' %}
+
+{% block aanhef %}
+Er is een extra wedstrijd voor u mogelijk:
+{% endblock %}
+
+{% block toelichting %}
+{% endblock %}
+
+{% block afsluiting %}
+<div class = "w3-row">
+<br>
+<br>
+Ga z.s.m. naar de 
+<a href="{{path('wizard_wijzig_wedstrijd_reageer', {'wedstrijd_wijziging_id':bericht_verrijkt['wedstrijd_wijziging_id']})}}" class="mylink">wedstrijd wijziging</a>
+op toernooiopmaat.nl om deze extra wedstrijd te bevestigen of te veranderen!
+</div>
+{% endblock %}
+

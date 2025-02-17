@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="container">
+<h2>Tijdslot reservering voor toevoegen of verplaatsen wedstrijd</h2>
+<table>
+<th>Categorie</th>
+<th>Van(dag)</th>
+<th>Van(tijd)</th>
+<th>Naar(dag)</th>
+<th>Naar(tijd)</th>
+<th>Speler 1</th>
+<th>Partner 1</th>
+<th>Speler 2</th>
+<th>Partner 2</th>
+<tr>
+<td>{{ deelnemer_gegevens[0]['categorie'] }}</td>
+<td>{{ oude_tijdslot[0]['dagnummer'] }}</td>
+<td>{{ oude_tijdslot[0]['starttijd'] }}</td>
+<td>{{ nieuwe_tijdslot[0]['dagnummer'] }}</td>
+<td>{{ nieuwe_tijdslot[0]['starttijd'] }}</td>
+{% if deelnemer_gegevens[0]['cat_type'] == "dubbel" %}
+<td><input type='checkbox' id='speler1' class='hover' {% if reservering.speler_1_bevestigd %} checked {% endif %}> {{ deelnemer_gegevens[0]['naam'] }}</td>
+<td><input type='checkbox' id='partner1' {% if reservering.partner_1_bevestigd %} checked {% endif %}> {{ deelnemer_gegevens[1]['naam'] }}</td>
+<td><input type='checkbox' id='speler2' {% if reservering.speler_2_bevestigd %} checked {% endif %}> {{ deelnemer_gegevens[2]['naam'] }}</td>
+<td><input type='checkbox' id='partner2' {% if reservering.partner_2_bevestigd %} checked {% endif %}> {{ deelnemer_gegevens[3]['naam'] }}</td>
+{% else %}
+<td class='hover' onclick="toggleBevestigd(this)"><input type='checkbox' id='speler1' {% if reservering.speler_1_bevestigd %} checked {% endif %}> {{ deelnemer_gegevens[0]['naam'] }}
+<div class='tooltip'>{% if reservering.speler_1_bevestigd %}Bevestigd{% else %}Niet bevestigd{% endif %}</div>
+</td>
+<td>-</td>
+<td class='hover' onclick="toggleBevestigd(this)"><input type='checkbox' id='speler2' {% if reservering.speler_2_bevestigd %} checked {% endif %}> {{ deelnemer_gegevens[1]['naam'] }}
+<div class='tooltip'>{% if reservering.speler_2_bevestigd %}Bevestigd{% else %}Niet bevestigd{% endif %}</div>
+</td>
+<td>-</td>
+{% endif %}
+<td><button class="newbutton">Verplaats</button></td>
+<td><button class="newbutton">Cancel</button></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+{% if deelnemer_gegevens[0]['cat_type'] == "dubbel" %}
+<td>{{ deelnemer_gegevens[0]['email'] }}</td>
+<td>{{ deelnemer_gegevens[1]['email'] }}</td>
+<td>{{ deelnemer_gegevens[2]['email'] }}</td>
+<td>{{ deelnemer_gegevens[3]['email'] }}</td>
+{% else %}
+<td>{{ deelnemer_gegevens[0]['email'] }}</td>
+<td></td>
+<td>{{ deelnemer_gegevens[1]['email'] }}</td>
+<td></td>
+{% endif %}
+</tr>
+</table>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src= "{{ asset('js/reservering.js')}}" ></script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/inschrijving.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<h3>Dashboard voor {{ datum | format_date(pattern: 'EEEE d MMM Y') }}</h3>
+<style>
+td, tr {
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 20px;
+}
+</style>
+
+<div class="w2-container" id="presentation-area">
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+{% if wedstrijden is defined %}
+<script>
+  var toon = true;
+  var wedstrijden = {{ wedstrijden|raw }};  // twig doet de json_decode al
+  var baanbezetting = {{ baanbezetting|raw }};
+  var aantal_banen = {{ aantal_banen|raw }};
+</script>
+{% else %}
+<script>
+  var toon = false;
+</script>
+{% endif %}
+<script src="{{ asset('js/dashboard.js')}}"></script>
+{% endblock %}

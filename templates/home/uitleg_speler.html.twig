@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="bg">
+</div>
+
+<div class="container humanText">
+<h1>Toernooi op Maat</h1>
+<p>
+Tennis-toernooien in dit systeem worden anders gepland dan in een afvalsysteem of poulesysteem.
+</p><p>
+Jij geeft het aantal wedstrijden op dat je in een toernooi zou willen spelen, in 1 of meer categorieën, 
+en Toernooi op Maat plant deze wedstrijden in (als het toernooi voldoende capaciteit heeft).
+Je speelt tegen tegenstanders met vergelijkbare ranking. 
+Als er tegenstanders/wedstrijden uitvallen, probeert de toernooiorganisatie vervangende wedstrijden te plannen.
+Als er minder wedstrijden gespeeld kunnen worden dan wat iedereen bij elkaar gevraagd heeft,
+plant Toernooi op Maat eerst 2 wedstrijden in een categorie in voor iedereen die dat wil, dan 3, etc.
+Je kunt in principe zo veel verhinderingen opgeven als je wilt, alleen wordt de kans dan groter
+dat je niet alle wedstrijden kunt spelen die je gevraagd hebt.
+</p>
+<p>
+Klik hier links op "Toernooien" om te zien voor welke toernooien je in kunt schrijven, registreer je met je email
+adres en schrijf je in!
+</p><p>
+<a href="{{ path('uitleg_aanvraag') }}" class="mylink">Hoe vraag ik als club een toernooi aan?</a>
+</p><p>
+<a href="{{ path('uitleg_toernooi_admin') }}" class="mylink">Hoe gebruik ik de website als toernooi-administrator?</a></div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src= "{{ asset('js/home.js')}}" ></script>
+{% endblock %}

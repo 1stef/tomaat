@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href = "{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+{{ parent() }}
+<div class="bg">
+</div>
+
+<div class="container humanText">
+<h1>Toernooi op Maat aanvragen</h1>
+<p>
+Als club kun je een toernooi aanvragen bij Toernooi op Maat. Hiervoor maakt een vertegenwoordiger van de 
+club een account aan op de website met "Registreer", bij de functies aan de linkerkant. Dit mag ook een account
+zijn dat is aangemaakt om als deelnemer in te schrijven voor een Toernooi op Maat toernooi.
+<br>
+Gebruik de functie "Login als:" "Aanvrager toernooi" aan de linkerkant. Er verschijnt dan bovenaan het 
+hoofdgedeelte een drop-down menu "Toernooi aanvragen". Voor een nieuw toernooi kies je "Vraag nieuw toernooi
+aan". Na het invullen van de aanvraag kun je pas verder met het voorbereiden van de inschrijving als
+Toernooi op Maat de aanvraag heeft goedgekeurd. Je kunt wel al mensen toevoegen als toernooi administrators,
+met de functie "Wijzig toernooi administrators" in het drop down menu. Je voegt gewoon de email adressen toe,
+waarmee die mensen zich gaan registreren of geregistreerd hebben bij Toernooi op Maat.
+</p><p>
+Het aanvragen en gebruiken van Toernooi op Maat is gratis. Ik heb geen commercieel doel met Toernooi op Maat. 
+Ik vraag de organiserende club wel om een vrijwillige bijdrage te doneren op de
+<a href="https://www.actiezondergrenzen.nl/actie/toernooiopmaat" class="mylink">Actiepagina op Artsen Zonder Grenzen</a>
+voor Toernooi Op Maat.
+<br>
+Graag hoor ik ook feedback met een mailtje naar feedback@toernooiopmaat.nl: op het concept, dingen die wel en niet goed werken,
+ideeën om toe te voegen, etc. Voor vragen en ondersteuning bij het gebruik van toernooiopmaat.nl kun je mailen naar
+support@toernooiopmaat.nl
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src= "{{ asset('js/home.js')}}" ></script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+{{ parent() }}
+
+<div class="container">
+    {% form_theme aanvraagForm 'bootstrap_4_horizontal_layout.html.twig' %}
+    <form class="form-horizontal" method="post">
+     <div class="form-group">
+       <div class="col-sm-7">
+         <h2 style="text-align:center;">Vraag toernooi aan</h2>
+       </div>
+     </div>
+
+{{ include ('toernooi/__aanvraag.html.twig') }}
+
+     <div class="form-group">        
+       <div class="col-sm-offset-3 col-sm-9">
+         <input type="hidden" name="toernooi_aanvraag" value="1">
+         <button class="newbutton">Opslaan</button>
+         <a class="newbutton" href="{{ path('home') }}">Cancel</a>
+       </div>
+     </div>
+      {{ form_rest(aanvraagForm) }}
+      {# {{ dump(aanvraagForm) }} #}
+    </form>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

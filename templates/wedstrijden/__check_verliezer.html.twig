@@ -1,0 +1,18 @@
+<div id="modalCheckVerliezer" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalCenterTitle">Uitslag invoeren</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+            </div>
+            <div class="modal-body">
+                Alleen de verliezer van de wedstrijd kan de uitslag invoeren. Bent u inderdaad de verliezer?
+            </div>
+            <div class="modal-footer">
+                <a class="newbutton" href = "{{path('speler_uitslag', {'wedstrijd_id':wedstrijd.wedstrijd_id}) }}">Ja</a>
+                <button type="button" class="newbutton" data-dismiss="modal">Nee</button>
+            </div>
+        </div>
+    </div>
+</div>
+

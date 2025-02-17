@@ -1,0 +1,19 @@
+#beschikbaarheid {
+    padding-bottom: 20px;
+  }
+
+th, td {
+border-style: groove;
+}
+
+td {
+background-color: lightgrey;
+}
+
+td.selectable {
+background-color: green;
+}
+
+td.active {
+background-color: red;
+}

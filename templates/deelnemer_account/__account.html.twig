@@ -1,0 +1,63 @@
+<div>
+    <h2>Account gegevens</h2>
+    <div class="mycontainer narrow60">
+    <div class="row">
+        <div class="form-col"> <label>naam</label> </div>
+        <div class="form-col"> {{ accountForm.vars.value.naam }} </div>
+    </div>
+    <div class="row">
+        <div class="form-col"> <label>bondsnummer</label> </div>
+        <div class="form-col"> {{ accountForm.vars.value.bondsnummer }} </div>
+    </div>
+    <div class="row">
+        <div class="form-col"> <label>geboortedatum</label> </div>
+        <div class="form-col"> {{ (accountForm.vars.value.geb_datum) }} </div>
+        {# <div {{ form_errors(accountForm.geb_datum) }} </div> #}
+    </div>
+    <div class="row">
+        <div class="form-col"> <label>ranking enkel</label> </div>
+        <div class="form-col"> {{ accountForm.vars.value.ranking_enkel }} </div>
+    </div>
+    <div class="row">
+        <div class="form-col"> <label>ranking dubbel</label> </div>
+        <div class="form-col"> {{ accountForm.vars.value.ranking_dubbel}} </div>
+    </div>
+    <div class="row">
+        <div class="form-col"> <label>telefoonnr</label> </div>
+        <div class="form-col"> {{ accountForm.vars.value.telefoonnummer}} </div>
+    </div>
+    <div class="row">
+        <button type="button" style="margin-left:30px" class="newbutton" data-toggle="modal" data-target="#modalAccount">Wijzig</button>
+    </div>
+    </div>
+</div>
+
+<div id="modalAccount" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="accountTitle">Account gegevens</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+            </div>
+
+            <div class="modal-body">
+            {% form_theme accountForm 'bootstrap_4_horizontal_layout.html.twig' %}
+            {{ form_start(accountForm, {'attr': {'novalidate': 'novalidate', 'id': 'accountForm_id'}}) }}
+            {{ form_widget(accountForm.user_id, {'attr':{'style':'display:none'}}) }}
+            {{ form_row(accountForm.naam) }}
+            {{ form_row(accountForm.bondsnummer, {'label': 'bondsnr'}) }}
+            {{ form_row(accountForm.geb_datum) }}
+            {{ form_row(accountForm.ranking_enkel) }}
+            {{ form_row(accountForm.ranking_dubbel) }}
+            {{ form_row(accountForm.telefoonnummer, {'label': 'telefoonnr'}) }}
+            <button class="newbutton">Opslaan</button>
+            {{ form_end(accountForm) }}
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" value="Opslaan" form="accountForm_id" class="newbutton">Opslaan</button>
+                <button type="button" class="newbutton" data-dismiss="modal">Sluit</button>
+            </div>
+        </div>
+    </div>
+</div>
